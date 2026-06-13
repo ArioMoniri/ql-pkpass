@@ -166,13 +166,18 @@ A pass is a ZIP archive, but pulling in a third-party zip library for a sandboxe
 
 ## 📄 Export a pass as PDF
 
-Open **pkpass Quick Look.app**, click **Open a pass & export PDF…**, pick any `.pkpass` / Google / Samsung file, and hit **Export PDF…**. The viewer renders the exact same card the Quick Look preview shows and saves it through `WKWebView`'s PDF writer.
+Two ways:
+
+- Open **pkpass Quick Look.app**, click **Open a pass & export PDF…**, pick any `.pkpass` / Google / Samsung file — the window flips into a viewer with a big **Export as PDF…** button.
+- Or right-click a pass in Finder → **Open With → pkpass Quick Look**.
+
+The viewer renders the exact same card the Quick Look preview shows and saves it through `WKWebView`'s PDF writer.
 
 ---
 
-## 🪟 Lives in the menu bar, not the Dock
+## 🪟 Stays out of your Dock
 
-The helper app runs as a **menu-bar accessory** (`LSUIElement`) — **no Dock icon**. Launch it and it tucks into the menu bar (wallet icon) with quick actions: open the window, Check for Updates, Refresh Quick Look, Refresh Finder, Quit. **Closing the window doesn't quit it** — it keeps running quietly in the background. (The Quick Look extensions themselves are separate system processes, so previews work whether or not the app is open.)
+The helper lives in the **menu bar** (wallet icon) with quick actions — open the window, Check for Updates, Refresh Quick Look, Refresh Finder, Quit. You get a normal Dock icon while a window is open; **close the window and the Dock icon disappears** while the app keeps running quietly in the menu bar. (The Quick Look extensions are separate system processes, so previews work whether or not the app is open.)
 
 ---
 

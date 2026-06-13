@@ -31,11 +31,6 @@
 	<key>NSHighResolutionCapable</key>
 	<true/>
 
-	<!-- Run as a menu-bar accessory: no Dock icon, stays alive in the
-	     background when the window is closed. -->
-	<key>LSUIElement</key>
-	<true/>
-
 	<!-- Sparkle auto-update. Replace SUPublicEDKey with the key printed by
 	     `generate_keys` before distributing; the private key stays in your Keychain. -->
 	<key>SUFeedURL</key>

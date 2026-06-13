@@ -14,11 +14,22 @@ import PkpassKit
 
 @MainActor
 final class PassViewerModel: ObservableObject {
+    /// Shared so the document-open handler (AppDelegate) and the UI use one viewer.
+    static let shared = PassViewerModel()
+
     let webView = WKWebView()
 
     @Published var title = "No pass open"
     @Published var hasPass = false
     @Published var errorMessage: String?
+
+    /// Clears the current pass (returns the window to the home screen).
+    func reset() {
+        hasPass = false
+        title = "No pass open"
+        errorMessage = nil
+        webView.loadHTMLString("", baseURL: nil)
+    }
 
     /// Prompts for a file and renders it.
     func openFile() {
@@ -84,27 +95,43 @@ struct PassWebView: NSViewRepresentable {
 }
 
 struct PassViewerView: View {
-    @StateObject private var model = PassViewerModel()
+    @ObservedObject var model: PassViewerModel
+    var onDone: () -> Void = {}
 
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
+            HStack(spacing: 12) {
                 Button {
                     model.openFile()
                 } label: {
-                    Label("Open Pass…", systemImage: "folder")
+                    Label("Open Another…", systemImage: "folder")
                 }
-                Text(model.title)
-                    .font(.headline)
-                    .lineLimit(1)
-                    .foregroundStyle(.secondary)
-                Spacer()
+                .keyboardShortcut("o")
+
+                Spacer(minLength: 8)
+
+                if model.hasPass {
+                    Text(model.title)
+                        .font(.headline)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer(minLength: 8)
+
+                // Always visible; prominent once a pass is loaded.
                 Button {
                     model.exportPDF()
                 } label: {
-                    Label("Export PDF…", systemImage: "square.and.arrow.down")
+                    Label("Export as PDF…", systemImage: "square.and.arrow.down")
                 }
+                .keyboardShortcut("e")
+                .buttonStyle(.borderedProminent)
                 .disabled(!model.hasPass)
+
+                Button("Done", action: onDone)
+                    .keyboardShortcut(.cancelAction)
             }
             .padding(12)
             .background(.bar)
@@ -114,18 +141,24 @@ struct PassViewerView: View {
             ZStack {
                 PassWebView(webView: model.webView)
                 if !model.hasPass {
-                    VStack(spacing: 8) {
+                    VStack(spacing: 10) {
                         Image(systemName: "doc.text.magnifyingglass")
                             .font(.system(size: 44))
                             .foregroundStyle(.tertiary)
-                        Text(model.errorMessage ?? "Open a pass to preview and export it as PDF")
+                        Text(model.errorMessage ?? "Open a pass to preview it, then “Export as PDF…”.")
                             .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 40)
+                        Button {
+                            model.openFile()
+                        } label: {
+                            Label("Open a Pass…", systemImage: "folder")
+                        }
+                        .controlSize(.large)
                     }
                 }
             }
         }
-        .frame(minWidth: 480, minHeight: 620)
+        .frame(minWidth: 540, minHeight: 640)
     }
 }

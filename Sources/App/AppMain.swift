@@ -35,15 +35,54 @@ struct PkpassQuickLookApp: App {
     }
 }
 
-/// Runs as a menu-bar accessory: no Dock icon, survives window close.
+/// Shows a Dock icon while a window is open; drops it (accessory, background)
+/// when the window is closed — and never quits on last-window-close.
 final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApp.setActivationPolicy(.accessory) // no Dock icon
+        // Launch as a normal app so the window reliably appears and comes forward.
+        NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(windowWillClose),
+            name: NSWindow.willCloseNotification, object: nil
+        )
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         false // keep running in the background when the window is closed
+    }
+
+    /// Reopening (no Dock icon to click, but `open` / Launchpad still fire this).
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows: Bool) -> Bool {
+        AppDelegate.showMainWindow()
+        return true
+    }
+
+    /// "Open with pkpass Quick Look" (from the Quick Look window or Finder) —
+    /// load the pass and pop the viewer so it can be exported.
+    func application(_ application: NSApplication, open urls: [URL]) {
+        guard let url = urls.first else { return }
+        PassViewerModel.shared.load(url: url) // hasPass flips the window to the viewer
+        AppDelegate.showMainWindow()
+    }
+
+    @objc private func windowWillClose(_ note: Notification) {
+        guard (note.object as? NSWindow)?.styleMask.contains(.titled) == true else { return }
+        // After this window closes, if no titled window remains, hide the Dock icon.
+        DispatchQueue.main.async {
+            let stillOpen = NSApp.windows.contains { $0.isVisible && $0.styleMask.contains(.titled) }
+            if !stillOpen { NSApp.setActivationPolicy(.accessory) }
+        }
+    }
+
+    /// Brings the app forward with a Dock icon and shows the main window.
+    static func showMainWindow() {
+        NSApp.setActivationPolicy(.regular)
+        NSApp.activate(ignoringOtherApps: true)
+        // Re-show an existing window, or let the scene re-create it.
+        if let window = NSApp.windows.first(where: { $0.styleMask.contains(.titled) }) {
+            window.makeKeyAndOrderFront(nil)
+        }
     }
 }
 
@@ -55,7 +94,8 @@ struct MenuBarContent: View {
 
     var body: some View {
         Button("Open pkpass Quick Look") {
-            openWindow(id: "main")
+            NSApp.setActivationPolicy(.regular) // restore the Dock icon
+            openWindow(id: "main")              // recreate the window if it was closed
             NSApp.activate(ignoringOtherApps: true)
         }
         Divider()
@@ -108,7 +148,7 @@ enum Helpers {
 
 struct ContentView: View {
     let updater: SPUUpdater
-    @State private var showingViewer = false
+    @ObservedObject private var viewerModel = PassViewerModel.shared
 
     private let steps: [(symbol: String, title: String, detail: String)] = [
         ("magnifyingglass", "Select a pass", "Click any .pkpass file in Finder."),
@@ -117,6 +157,16 @@ struct ContentView: View {
     ]
 
     var body: some View {
+        // When a pass is loaded, the whole window becomes the viewer (with the
+        // Export button). This avoids fragile sheets that can hide behind Finder.
+        if viewerModel.hasPass {
+            PassViewerView(model: viewerModel, onDone: { viewerModel.reset() })
+        } else {
+            home
+        }
+    }
+
+    private var home: some View {
         ScrollView {
             VStack(spacing: 22) {
                 header
@@ -138,17 +188,6 @@ struct ContentView: View {
                     .multilineTextAlignment(.center)
             }
             .padding(28)
-        }
-        .sheet(isPresented: $showingViewer) {
-            VStack(spacing: 0) {
-                PassViewerView()
-                HStack {
-                    Spacer()
-                    Button("Done") { showingViewer = false }.keyboardShortcut(.defaultAction)
-                }
-                .padding(12)
-            }
-            .frame(minWidth: 520, minHeight: 700)
         }
     }
 
@@ -173,7 +212,8 @@ struct ContentView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             Button {
-                showingViewer = true
+                // Loading a pass flips the window into the viewer (with Export).
+                viewerModel.openFile()
             } label: {
                 Label("Open a pass & export PDF…", systemImage: "doc.badge.arrow.up")
             }
