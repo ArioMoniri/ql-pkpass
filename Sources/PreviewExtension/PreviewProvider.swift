@@ -20,7 +20,7 @@ final class PreviewProvider: QLPreviewProvider, QLPreviewingController {
         previewLog.info("providePreview start: \(url.lastPathComponent, privacy: .public)")
 
         do {
-            let document = try PkpassDocument(contentsOf: url)
+            let document = try PassDocumentLoader.document(contentsOf: url)
             let html = PassHTMLRenderer(document: document).render()
             let data = Data(html.utf8)
             let title = document.pass.displayTitle
@@ -28,7 +28,7 @@ final class PreviewProvider: QLPreviewProvider, QLPreviewingController {
 
             let reply = QLPreviewReply(
                 dataOfContentType: .html,
-                contentSize: CGSize(width: 460, height: 640)
+                contentSize: CGSize(width: 480, height: 760)
             ) { reply in
                 reply.title = title
                 reply.stringEncoding = .utf8

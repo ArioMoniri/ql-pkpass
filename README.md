@@ -4,21 +4,23 @@
 
 # pkpass Quick Look
 
-**Peek inside Apple Wallet passes from Finder — just hit the Space bar.**
+**Peek inside Apple Wallet, Google Wallet & Samsung Wallet passes from Finder — just hit the Space bar.**
 
 ![macOS 12+](https://img.shields.io/badge/macOS-12%2B-111?logo=apple&logoColor=white)
-![Swift](https://img.shields.io/badge/Swift-5%20%2F%206-f05138?logo=swift&logoColor=white)
+![Swift 6](https://img.shields.io/badge/Swift-6-f05138?logo=swift&logoColor=white)
 ![Quick Look](https://img.shields.io/badge/Quick%20Look-preview%20%2B%20thumbnail-1a82dc)
-![No dependencies](https://img.shields.io/badge/dependencies-zero-2ea44f)
+![Wallets](https://img.shields.io/badge/wallets-Apple%20·%20Google%20·%20Samsung-34a853)
+![Auto-update](https://img.shields.io/badge/updates-Sparkle-orange)
+![No dependencies](https://img.shields.io/badge/runtime%20deps-zero-2ea44f)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
 
 </div>
 
-A `.pkpass` file is just a zipped-up Apple Wallet pass — a boarding pass, a coffee loyalty card, a concert ticket. macOS has no idea how to show you one without opening Wallet or unzipping it by hand. This fixes that.
+A `.pkpass` file is just a zipped-up Apple Wallet pass — a boarding pass, a coffee loyalty card, a concert ticket. macOS has no idea how to show you one without opening Wallet or unzipping it by hand. This fixes that — and throws in Google and Samsung wallet passes for good measure.
 
-Select a pass in Finder, press <kbd>Space</kbd>, and you get a proper Wallet-style card: the right colours, the logo, the fields, a scannable barcode, and the small print on the back. Finder shows a card thumbnail for it too. Everything is rendered on your Mac — **no network calls, ever.**
+Select a pass in Finder, press <kbd>Space</kbd>, and you get a proper Wallet-style card: the right colours, the logo, every field group, a scan-quality barcode, the small print on the back, a listing of everything inside the file, and the raw JSON if you want to poke around. Finder shows a card thumbnail for it too. Everything is rendered on your Mac — **no network calls, ever.**
 
-> 🎬 **See it move:** the card below is a live animated SVG (it plays right here on GitHub). For the full thing — Lottie and Rive running in the browser — open the **[live demo page](https://ariomoniri.github.io/ql-pkpass/)**.
+> 🎬 **See it move:** the card below is a live animated SVG (it plays right here on GitHub). For the full thing — Lottie, Rive, and a WebGPU shader running in the browser — open the **[live demo page](https://ariomoniri.github.io/ql-pkpass/)**.
 
 <div align="center">
 
@@ -30,7 +32,7 @@ Select a pass in Finder, press <kbd>Space</kbd>, and you get a proper Wallet-sty
 
 ## ⚡ Install
 
-You'll need macOS 12 or newer and Xcode installed (it ships the build tools). Then:
+You'll need macOS 12 or newer and Xcode (it ships the build tools). Then:
 
 ```bash
 git clone https://github.com/ArioMoniri/ql-pkpass.git
@@ -38,12 +40,12 @@ cd ql-pkpass
 make install
 ```
 
-That builds the app, drops it in `/Applications`, and refreshes Quick Look. Now click any `.pkpass` in Finder and tap <kbd>Space</kbd>.
+That builds the app, drops it in `/Applications`, registers and **enables** the Quick Look extensions, and refreshes Quick Look. Now click any `.pkpass` in Finder and tap <kbd>Space</kbd>.
 
-Want to try it immediately? There's a sample pass in the repo:
+Try it immediately with the bundled sample:
 
 ```bash
-open examples/Skyline-BoardingPass.pkpass   # or just select it in Finder and press Space
+open examples/Skyline-BoardingPass.pkpass   # or select it in Finder and press Space
 ```
 
 <details>
@@ -52,19 +54,19 @@ open examples/Skyline-BoardingPass.pkpass   # or just select it in Finder and pr
 <br>
 
 ```bash
-# 1. Build a Release copy of the app (ad-hoc signed, no Apple account needed)
+# Build a Release copy (ad-hoc signed, no Apple account needed)
 xcodebuild build -scheme PkpassQuickLook -configuration Release \
   -derivedDataPath build CODE_SIGN_IDENTITY="-"
 
-# 2. Move it into place
+# Move it into place and register + enable the extensions
 cp -R build/Build/Products/Release/PkpassQuickLook.app /Applications/
-
-# 3. Tell macOS it exists and reset Quick Look
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f /Applications/PkpassQuickLook.app
+pluginkit -e use -i com.ariomoniri.PkpassQuickLook.Preview
+pluginkit -e use -i com.ariomoniri.PkpassQuickLook.Thumbnail
 qlmanage -r && qlmanage -r cache
 ```
 
-Or just open `PkpassQuickLook.xcodeproj` in Xcode and hit ▶︎ once — running the host app registers the extensions.
+Or just open `PkpassQuickLook.xcodeproj` in Xcode and run it once.
 
 </details>
 
@@ -83,24 +85,39 @@ make uninstall      # removes the app and refreshes Quick Look
 
 ## 👀 What you'll see
 
-The preview adapts to whatever style the pass declares — boarding pass, event ticket, coupon, store card, or generic.
+The preview adapts to whatever style the pass declares — boarding pass, event ticket, coupon, store card, or generic — and renders it at its real proportions (no squished square).
 
-| Part of the pass | What the plugin does with it |
+| In the preview | What you get |
 | --- | --- |
-| 🎨 Colours | Uses the pass's own `backgroundColor` / `foregroundColor` / `labelColor` |
-| 🏷️ Logo & header | Shows the logo image (or `logoText`) plus gate/flight-style header fields |
-| ✈️ Primary fields | Big origin → destination for boarding passes, with a transit icon |
-| 🔖 Secondary / auxiliary | Passenger, seat, balance, expiry… laid out like the real card |
-| 🔳 Barcode | Re-rendered crisply with Core Image — QR, PDF417, Aztec, Code 128 |
-| 📋 Back of pass | The fine print, with real links made clickable |
-| ℹ️ Pass info & raw JSON | Collapsible panels for serial number, IDs, signature status, and the raw `pass.json` |
+| 🎨 **Brand colours** | The pass's own `backgroundColor` / `foregroundColor` / `labelColor`, the way Wallet renders them |
+| 🏷️ **Logo & organization** | The logo image (or `logoText`) plus the organization name |
+| 🧾 **Every field group** | Header, primary, secondary, auxiliary, and back fields — laid out like the real card |
+| ✈️ **Boarding passes** | Big origin → destination with the right transit icon |
+| 🔳 **Barcode** | Re-rendered from the pass at **scan-quality** resolution, keeping each symbology's true shape — QR, PDF417, Aztec, Code 128 |
+| 🗂️ **File listing** | Every file inside the archive with its size |
+| 🧩 **Raw JSON** | The full `pass.json` (or Google/Samsung JSON) for inspection |
+| 📄 **Export to PDF** | Open the app's viewer and save any pass as a PDF |
+
+---
+
+## 🌍 Apple, Google & Samsung
+
+| Wallet | File it reads | How to preview it |
+| --- | --- | --- |
+| 🍎 **Apple Wallet** | `.pkpass` (a signed ZIP) | Works out of the box — Space-bar in Finder |
+| 🟢 **Google Wallet** | the JSON of a "Save to Google Wallet" JWT payload (or a raw JWT) | Open it in the app, **or** name it `.gwallet` / `.gpass` to Space-bar it |
+| 🔵 **Samsung Wallet** | the documented "Wallet Card" JSON (`{ "card": { … } }`) | Open it in the app, **or** name it `.swcard` / `.samsungpass` to Space-bar it |
 
 <details>
-<summary>📸 Boarding pass, store card, event ticket — they all just work</summary>
+<summary>Why Google/Samsung need a rename (the honest version)</summary>
 
 <br>
 
-The renderer keys off the top-level style object in `pass.json` (`boardingPass`, `storeCard`, `eventTicket`, `coupon`, or `generic`) and arranges the fields the way Wallet would. Event tickets even use the `background.png` as a full-bleed backdrop behind the card. Try editing `examples/Skyline-BoardingPass.pkpass` (it's just a zip) and re-previewing.
+Neither Google nor Samsung ships a real downloadable pass file like Apple's `.pkpass`. Google passes travel as a **"Save to Google Wallet" JWT**; Samsung passes travel as an **encrypted token only Samsung can read**. The closest human-readable artifact in both cases is the **JSON** the issuer builds before signing/encrypting.
+
+So this plugin renders that JSON. macOS can only route a file to a Quick Look extension by its type, and a plain `.json` would be far too broad to claim — so the plugin declares its own file types (`.gwallet`, `.gpass`, `.swcard`, `.samsungpass`). Drop your pass JSON under one of those extensions and Space-bar works; or just use **Open a pass…** in the app, which takes any file.
+
+Google and Samsung images are remote URLs (not embedded like Apple's), so a sandboxed preview renders colours, text and the locally-drawn barcode — never reaching out to the network.
 
 </details>
 
@@ -113,9 +130,9 @@ The renderer keys off the top-level style object in `pass.json` (`boardingPass`,
 
 <br>
 
-Old-school `.qlgenerator` plugins are dead on modern macOS. So this is a **modern Quick Look App Extension** — actually two of them, bundled inside a tiny host app:
+Old-school `.qlgenerator` plugins are dead on modern macOS. This is a **modern Quick Look App Extension** — two of them, bundled inside a tiny host app:
 
-- **`PkpassPreviewExtension`** — a `QLPreviewProvider` that returns a self-contained HTML card (images and barcode inlined as base64, so nothing is fetched).
+- **`PkpassPreviewExtension`** — a data-based `QLPreviewProvider` that returns a self-contained HTML card (images and barcode inlined as base64, so nothing is fetched).
 - **`PkpassThumbnailExtension`** — a `QLThumbnailProvider` that draws the Finder thumbnail.
 
 Both talk to **`PkpassKit`**, a dependency-free Swift framework that does the real work.
@@ -123,13 +140,15 @@ Both talk to **`PkpassKit`**, a dependency-free Swift framework that does the re
 </details>
 
 <details>
-<summary>The one gotcha that trips everyone up 🪤</summary>
+<summary>Three things that will silently break a pkpass Quick Look plugin 🪤</summary>
 
 <br>
 
-A `.pkpass` file on disk is **not** the UTI you'd guess. `com.apple.pkpass` is the *package* type (an installed pass directory). An actual file is **`com.apple.pkpass-data`** (it conforms to `public.data`, not to `com.apple.pkpass`). If your extension only registers `com.apple.pkpass`, it builds and installs fine and then silently never fires.
+Hard-won on macOS 26 — saving you the afternoons:
 
-So both extensions register **both** types. (Found this the hard way; saving you the afternoon.)
+1. **The UTI isn't what you'd guess.** `com.apple.pkpass` is the *package* type; an actual file on disk is **`com.apple.pkpass-data`** (conforms to `public.data`). Register the wrong one and the extension installs fine and then never fires.
+2. **Data-based previews need a flag.** A `QLPreviewProvider` that returns data must set **`QLIsDataBasedPreview = true`** in its Info.plist, or Quick Look treats it as view-based, waits for a view that never comes, and spins forever.
+3. **No GPU in the sandbox.** Forcing a GPU `CIContext` (or WebGPU) inside the preview extension stalls on Metal init. Barcodes are rendered on the **CPU**; WebGPU is confined to the demo page.
 
 </details>
 
@@ -138,7 +157,45 @@ So both extensions register **both** types. (Found this the hard way; saving you
 
 <br>
 
-A pass is a ZIP archive, but pulling in a third-party zip library for a sandboxed Quick Look extension felt heavy. macOS already ships the `Compression` framework, and its `COMPRESSION_ZLIB` mode decodes raw DEFLATE — which is exactly what ZIP method 8 uses. So `MiniZip.swift` reads the central directory itself and inflates entries with system frameworks only. Zero external dependencies, nothing to resolve, nothing to audit but our own ~180 lines.
+A pass is a ZIP archive, but pulling in a third-party zip library for a sandboxed extension felt heavy. macOS already ships the `Compression` framework, and its `COMPRESSION_ZLIB` mode decodes raw DEFLATE — exactly what ZIP method 8 uses. So `MiniZip.swift` reads the central directory itself and inflates entries with system frameworks only. Zero runtime dependencies, with decompression-bomb caps and bounds checks for hostile input.
+
+</details>
+
+---
+
+## 📄 Export a pass as PDF
+
+Open **pkpass Quick Look.app**, click **Open a pass & export PDF…**, pick any `.pkpass` / Google / Samsung file, and hit **Export PDF…**. The viewer renders the exact same card the Quick Look preview shows and saves it through `WKWebView`'s PDF writer.
+
+---
+
+## 🔄 Auto-updates (Sparkle)
+
+The app ships with [Sparkle](https://sparkle-project.org) wired up — there's a **Check for Updates…** item in the app menu and on the main window. It reads an *appcast* feed at `https://ariomoniri.github.io/ql-pkpass/appcast.xml`.
+
+<details>
+<summary>How to cut a release that auto-updates</summary>
+
+<br>
+
+1. **One-time:** generate an EdDSA key pair. After a build resolves the Sparkle package:
+   ```bash
+   KEYS=$(find ~/Library/Developer/Xcode/DerivedData -name generate_keys -path '*Sparkle*' | head -1)
+   "$KEYS"            # stores the PRIVATE key in your login Keychain, prints the PUBLIC key
+   ```
+   Paste the printed public key into `SUPublicEDKey` in [`Sources/App/Info.plist`](Sources/App/Info.plist). **Never commit the private key.**
+
+2. **Per release:** bump `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` in [`project.yml`](project.yml), build a signed (Developer ID + notarized) Release, then:
+   ```bash
+   ditto -c -k --sequesterRsrc --keepParent \
+     build/Build/Products/Release/PkpassQuickLook.app updates/PkpassQuickLook-1.1.0.zip
+   APPCAST=$(find ~/Library/Developer/Xcode/DerivedData -name generate_appcast -path '*Sparkle*' | head -1)
+   "$APPCAST" updates/                       # signs + sizes the zip, writes updates/appcast.xml
+   gh release create v1.1.0 updates/PkpassQuickLook-1.1.0.zip
+   cp updates/appcast.xml docs/appcast.xml && git add docs/appcast.xml && git commit -m "Release 1.1.0" && git push
+   ```
+
+> ⚠️ Real cross-machine auto-update needs a **Developer ID** signature (Sparkle verifies code-signing continuity). The local `make install` uses ad-hoc signing, which is perfect for trying it out but won't self-update across machines.
 
 </details>
 
@@ -147,20 +204,19 @@ A pass is a ZIP archive, but pulling in a third-party zip library for a sandboxe
 ## 🛠️ Build & develop
 
 ```bash
-make test       # run the unit tests
+make test       # run the unit tests (Apple + Google + Samsung parsers, renderer, zip)
 make build      # build app + both extensions
 make sample     # regenerate examples/Skyline-BoardingPass.pkpass
+make icon       # regenerate the app icon set
 make project    # regenerate the .xcodeproj from project.yml (needs xcodegen)
 ```
-
-The project is defined in [`project.yml`](project.yml) and generated with [XcodeGen](https://github.com/yonaskolb/XcodeGen), but the resulting `.xcodeproj` is committed so you can build without it.
 
 <details>
 <summary>🧪 Tests & TDD</summary>
 
 <br>
 
-`PkpassKit` was built test-first with Swift Testing. The suite spins up **real** `.pkpass` archives with `/usr/bin/zip` (covering both DEFLATE and stored entries) and checks the zip reader, the `pass.json` model (including the awkward "field values can be strings *or* numbers" cases), colour parsing, barcode generation, the HTML renderer (fields present, HTML escaped, URLs linkified), and the thumbnail drawing path.
+`PkpassKit` is built test-first with Swift Testing. The suite spins up **real** `.pkpass` archives with `/usr/bin/zip` (DEFLATE + stored entries) and checks the zip reader, the `pass.json` model (including string-or-number field values), colour parsing, scan-quality barcode generation, the HTML renderer (fields present, HTML escaped, URLs linkified), the thumbnail drawing path, and the **Google + Samsung** parsers / format auto-detection.
 
 ```bash
 xcodebuild test -scheme PkpassKit -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO
@@ -175,13 +231,13 @@ xcodebuild test -scheme PkpassKit -destination 'platform=macOS' CODE_SIGNING_ALL
 
 ```
 Sources/
-  PkpassKit/            # the engine: zip reader, model, renderers (no UI, no deps)
-  App/                  # host app — explains the plugin, refreshes Quick Look
+  PkpassKit/            # the engine: zip reader, model, Apple/Google/Samsung parsers, renderers
+  App/                  # host app — viewer, PDF export, refresh helpers, Sparkle updates
   PreviewExtension/     # QLPreviewProvider  → the Space-bar HTML preview
   ThumbnailExtension/   # QLThumbnailProvider → Finder thumbnails
 Tests/PkpassKitTests/   # Swift Testing unit tests
-scripts/                # install / uninstall / build / sample generator
-docs/                   # GitHub Pages live demo (Lottie + Rive + animated SVG)
+scripts/                # install / uninstall / build / sample + icon generators
+docs/                   # GitHub Pages demo (Lottie + Rive + WebGPU + animated SVG) + appcast.xml
 examples/               # a ready-to-try sample pass
 project.yml             # XcodeGen project definition
 ```
@@ -197,29 +253,24 @@ project.yml             # XcodeGen project definition
 
 <br>
 
-1. Make sure the app is in `/Applications` and has been registered:
+1. Confirm the extensions are registered **and enabled** (a leading `+`):
    ```bash
-   pluginkit -m -p com.apple.quicklook.preview | grep -i pkpass
+   pluginkit -mAv | grep -i pkpass
    ```
-   You should see `com.ariomoniri.PkpassQuickLook.Preview`.
 2. Reset Quick Look and relaunch Finder:
    ```bash
    qlmanage -r && qlmanage -r cache && killall Finder
    ```
-3. Open `PkpassQuickLook.app` once — the host app has a **Refresh Quick Look** button.
-4. Test rendering directly from the terminal:
-   ```bash
-   qlmanage -p examples/Skyline-BoardingPass.pkpass
-   ```
+3. Open **pkpass Quick Look.app** and click **Refresh Quick Look** / **Refresh Finder**, or enable it under **System Settings ▸ General ▸ Login Items & Extensions ▸ Quick Look**.
 
 </details>
 
 <details>
-<summary>"PkpassQuickLook can't be opened because Apple cannot check it"</summary>
+<summary>"can't be opened because Apple cannot check it"</summary>
 
 <br>
 
-That's Gatekeeper reacting to the ad-hoc signature on a locally-built app. Right-click the app → **Open**, or run `xattr -dr com.apple.quarantine /Applications/PkpassQuickLook.app`. Building it yourself (as you did) is the trusted path here.
+Gatekeeper reacting to the ad-hoc signature on a locally-built app. Right-click → **Open**, or `xattr -dr com.apple.quarantine /Applications/PkpassQuickLook.app`. Building it yourself (as you did) is the trusted path.
 
 </details>
 
@@ -228,7 +279,7 @@ That's Gatekeeper reacting to the ad-hoc signature on a locally-built app. Right
 
 <br>
 
-Yes. The extensions are sandboxed, they only ever read the file you're previewing, and there is **no networking code anywhere** — images and barcodes are rendered locally and embedded directly in the preview. Nothing about your passes leaves the machine.
+Yes. The extensions are sandboxed, they only read the file you're previewing, and there is **no networking code anywhere** — images and barcodes are rendered locally and embedded directly in the preview. Nothing about your passes leaves the machine.
 
 </details>
 
@@ -236,12 +287,12 @@ Yes. The extensions are sandboxed, they only ever read the file you're previewin
 
 ## 🤝 Contributing
 
-Issues and PRs welcome. If you hit a pass that renders wrong, attach it (or a scrubbed version) — odd-shaped real-world passes are the best test cases.
+Issues and PRs welcome. If you hit a pass that renders wrong, attach it (or a scrubbed version) — odd-shaped real-world passes make the best test cases.
 
 ## 📄 License
 
 MIT — see [LICENSE](LICENSE). Built by [Ariorad Moniri](https://github.com/ArioMoniri).
 
 <div align="center">
-<sub>Apple, Wallet, and Quick Look are trademarks of Apple Inc. This project is not affiliated with Apple.</sub>
+<sub>Apple, Wallet, Google Wallet, and Samsung Wallet are trademarks of their respective owners. This project is not affiliated with any of them.</sub>
 </div>

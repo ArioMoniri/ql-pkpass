@@ -16,7 +16,7 @@ final class ThumbnailProvider: QLThumbnailProvider {
         _ handler: @escaping (QLThumbnailReply?, Error?) -> Void
     ) {
         do {
-            let document = try PkpassDocument(contentsOf: request.fileURL)
+            let document = try PassDocumentLoader.document(contentsOf: request.fileURL)
             let renderer = PassThumbnailRenderer(document: document)
             let size = request.maximumSize
 

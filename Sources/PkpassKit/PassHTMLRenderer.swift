@@ -52,6 +52,7 @@ public struct PassHTMLRenderer {
           </div>
           \(backSection())
           \(metaSection())
+          \(filesSection())
           \(rawSection())
           <footer class="credit">Rendered by <strong>pkpass Quick Look</strong> · no data leaves your Mac</footer>
         </main>
@@ -123,13 +124,16 @@ public struct PassHTMLRenderer {
         guard let barcode = pass.primaryBarcode,
               let png = BarcodeRenderer.pngData(for: barcode) else { return "" }
         let alt = barcode.altText.map { #"<div class="barcode-alt">\#(escape($0))</div>"# } ?? ""
-        let shape = barcode.format == "PKBarcodeFormatPDF417" ? "wide" : "square"
+        // 1D / stacked codes are wide; matrix codes (QR, Aztec) are square.
+        let isWide = barcode.format == "PKBarcodeFormatPDF417" || barcode.format == "PKBarcodeFormatCode128"
+        let shape = isWide ? "wide" : "square"
         return """
         <div class="barcode">
           <div class="barcode-card \(shape)">
             <img src="\(dataURI(png))" alt="\(escape(barcode.formatName))">
           </div>
           \(alt)
+          <div class="barcode-format">\(escape(barcode.formatName))</div>
         </div>
         """
     }
@@ -159,6 +163,7 @@ public struct PassHTMLRenderer {
             guard let value, !value.isEmpty else { return }
             rows.append(#"<div class="meta-row"><span>\#(label)</span><span>\#(escape(value))</span></div>"#)
         }
+        add("Source", document.source.displayName)
         add("Type", "\(pass.style.symbol)  \(pass.style.displayName)")
         add("Organization", pass.organizationName)
         add("Description", pass.description)
@@ -166,7 +171,9 @@ public struct PassHTMLRenderer {
         add("Pass type ID", pass.passTypeIdentifier)
         add("Team", pass.teamIdentifier)
         add("Expires", pass.expirationDate)
-        add("Signed", document.isSigned ? "Yes — signature present" : "No signature")
+        if document.source == .applePkpass {
+            add("Signed", document.isSigned ? "Yes — signature present" : "No signature")
+        }
         guard !rows.isEmpty else { return "" }
         return """
         <details class="panel">
@@ -176,10 +183,29 @@ public struct PassHTMLRenderer {
         """
     }
 
+    private func filesSection() -> String {
+        guard !document.files.isEmpty else { return "" }
+        let rows = document.files.map { file in
+            """
+            <div class="meta-row"><span>\(escape(file.name))</span><span>\(escape(file.formattedSize))</span></div>
+            """
+        }.joined()
+        let total = document.files.reduce(0) { $0 + $1.size }
+        let totalStr = ByteCountFormatter.string(fromByteCount: Int64(total), countStyle: .file)
+        return """
+        <details class="panel">
+          <summary>🗂️ Files in archive (\(document.files.count))</summary>
+          <div class="panel-body meta">\(rows)
+            <div class="meta-row total"><span>Total</span><span>\(escape(totalStr))</span></div>
+          </div>
+        </details>
+        """
+    }
+
     private func rawSection() -> String {
         """
         <details class="panel">
-          <summary>🧾 Raw pass.json</summary>
+          <summary>🧾 \(escape(document.source.rawLabel))</summary>
           <pre class="raw">\(escape(document.rawPassJSON))</pre>
         </details>
         """
@@ -277,7 +303,7 @@ public struct PassHTMLRenderer {
           background: #ececf1;
           -webkit-font-smoothing: antialiased;
         }
-        .stage { max-width: 430px; margin: 0 auto; padding: 22px 16px 32px; }
+        .stage { max-width: 460px; margin: 0 auto; padding: 22px 16px 32px; }
         .pass {
           background: var(--bg);
           color: var(--fg);
@@ -315,10 +341,13 @@ public struct PassHTMLRenderer {
         .aux-row { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 16px 22px; }
         .aux-row .field { min-width: 60px; }
         .barcode { margin-top: 20px; display: flex; flex-direction: column; align-items: center; }
-        .barcode-card { background: #fff; padding: 12px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-        .barcode-card.square img { width: 168px; height: 168px; display: block; image-rendering: pixelated; }
-        .barcode-card.wide img { width: 280px; height: auto; display: block; image-rendering: pixelated; }
+        .barcode-card { background: #fff; padding: 14px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); max-width: 100%; }
+        /* Keep each symbology's true aspect ratio: matrix codes stay square,
+           1D / stacked codes stay wide. Rendered at scan-quality resolution. */
+        .barcode-card.square img { width: 210px; height: 210px; display: block; image-rendering: pixelated; }
+        .barcode-card.wide img { width: 100%; max-width: 360px; height: auto; display: block; image-rendering: pixelated; }
         .barcode-alt { margin-top: 8px; font-size: 12px; letter-spacing: 1px; color: var(--label); font-variant-numeric: tabular-nums; }
+        .barcode-format { margin-top: 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px; opacity: 0.4; }
         .panel {
           margin-top: 14px; background: rgba(127,127,127,0.10); border: 0.5px solid rgba(127,127,127,0.18);
           border-radius: 12px; overflow: hidden; color: inherit;

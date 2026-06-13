@@ -1,0 +1,35 @@
+{
+  "loyaltyClasses": [
+    {
+      "id": "3388000000022195611.loyalty-class-001",
+      "issuerName": "Adam's Apparel",
+      "programName": "Adam's Rewards",
+      "hexBackgroundColor": "#0f9d58",
+      "accountNameLabel": "Member Name",
+      "accountIdLabel": "Member ID"
+    }
+  ],
+  "loyaltyObjects": [
+    {
+      "id": "3388000000022195611.loyalty-001",
+      "classId": "3388000000022195611.loyalty-class-001",
+      "state": "ACTIVE",
+      "accountName": "Jane Doe",
+      "accountId": "1234567890",
+      "loyaltyPoints": { "label": "Points", "balance": { "int": 1250 } },
+      "secondaryLoyaltyPoints": { "label": "Visits", "balance": { "int": 14 } },
+      "barcode": {
+        "type": "QR_CODE",
+        "value": "ADAMS-1234567890",
+        "alternateText": "1234 5678 90"
+      },
+      "textModulesData": [
+        { "id": "tier", "header": "Tier", "body": "Gold" },
+        { "id": "since", "header": "Member Since", "body": "2021" }
+      ],
+      "linksModuleData": {
+        "uris": [ { "uri": "https://example.com/rewards", "description": "Rewards portal" } ]
+      }
+    }
+  ]
+}

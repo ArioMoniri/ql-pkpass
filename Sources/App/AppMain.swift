@@ -2,33 +2,62 @@
 //  AppMain.swift
 //  pkpass Quick Look
 //
-//  A small host app whose real job is to ship the two Quick Look extensions.
-//  The window simply explains how to use the plugin and links to the relevant
-//  System Settings pane.
+//  Host app for the two Quick Look extensions. It explains how to use the
+//  plugin, offers Quick Look / Finder refresh helpers, opens an in-app
+//  viewer that can export passes to PDF, and wires up Sparkle auto-updates.
 //
 
 import SwiftUI
+import Combine
+import Sparkle
 
 @main
 struct PkpassQuickLookApp: App {
+    // Owns the Sparkle updater for the app's lifetime.
+    private let updaterController = SPUStandardUpdaterController(
+        startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil
+    )
+
     var body: some Scene {
         WindowGroup("pkpass Quick Look") {
-            ContentView()
-                .frame(minWidth: 480, idealWidth: 540, minHeight: 560, idealHeight: 620)
+            ContentView(updater: updaterController.updater)
+                .frame(minWidth: 520, idealWidth: 560, minHeight: 600, idealHeight: 680)
+        }
+        .commands {
+            CommandGroup(after: .appInfo) {
+                CheckForUpdatesView(updater: updaterController.updater)
+            }
         }
     }
 }
 
+// MARK: - Sparkle "Check for Updates" control
+
+struct CheckForUpdatesView: View {
+    let updater: SPUUpdater
+
+    var body: some View {
+        // Sparkle guards against overlapping checks internally, so the button
+        // can stay enabled — this avoids a Swift 6 main-actor key-path issue.
+        Button("Check for Updates…") { updater.checkForUpdates() }
+    }
+}
+
+// MARK: - Main window
+
 struct ContentView: View {
+    let updater: SPUUpdater
+    @State private var showingViewer = false
+
     private let steps: [(symbol: String, title: String, detail: String)] = [
         ("magnifyingglass", "Select a pass", "Click any .pkpass file in Finder."),
-        ("space", "Press Space", "Quick Look renders a Wallet-style preview instantly."),
+        ("space", "Press Space", "Quick Look renders a Wallet-style card instantly."),
         ("photo.on.rectangle", "See thumbnails", "Finder shows a card thumbnail for every pass.")
     ]
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 24) {
+            VStack(spacing: 22) {
                 header
 
                 VStack(spacing: 14) {
@@ -39,59 +68,98 @@ struct ContentView: View {
                 .padding(20)
                 .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 16))
 
-                VStack(spacing: 10) {
-                    Text("Not seeing previews?")
-                        .font(.headline)
-                    Text("Make sure the extension is enabled, then relaunch Finder.")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-                    HStack {
-                        Button("Open Extensions Settings…", action: openExtensionSettings)
-                        Button("Refresh Quick Look", action: refreshQuickLook)
-                    }
-                    .controlSize(.large)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(20)
-                .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 16))
+                viewerCard
+                maintenanceCard
 
-                Text("100% on-device · no network access · open source")
+                Text("Apple Wallet · Google Wallet · Samsung Wallet · 100% on-device")
                     .font(.footnote)
                     .foregroundStyle(.tertiary)
+                    .multilineTextAlignment(.center)
             }
             .padding(28)
+        }
+        .sheet(isPresented: $showingViewer) {
+            VStack(spacing: 0) {
+                PassViewerView()
+                HStack {
+                    Spacer()
+                    Button("Done") { showingViewer = false }.keyboardShortcut(.defaultAction)
+                }
+                .padding(12)
+            }
+            .frame(minWidth: 520, minHeight: 700)
         }
     }
 
     private var header: some View {
         VStack(spacing: 10) {
             Image(systemName: "wallet.pass.fill")
-                .font(.system(size: 52))
+                .font(.system(size: 50))
                 .foregroundStyle(.tint)
             Text("pkpass Quick Look")
                 .font(.largeTitle.bold())
-            Text("Preview Apple Wallet passes without opening them.")
+            Text("Preview Wallet passes without opening them.")
                 .font(.title3)
                 .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
         }
     }
 
+    private var viewerCard: some View {
+        VStack(spacing: 10) {
+            Text("Open & export")
+                .font(.headline)
+            Text("View any pass in-app and save it as a PDF.")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            Button {
+                showingViewer = true
+            } label: {
+                Label("Open a pass & export PDF…", systemImage: "doc.badge.arrow.up")
+            }
+            .controlSize(.large)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(20)
+        .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 16))
+    }
+
+    private var maintenanceCard: some View {
+        VStack(spacing: 10) {
+            Text("Not seeing previews?")
+                .font(.headline)
+            Text("Refresh Quick Look, then relaunch Finder.")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            HStack {
+                Button("Refresh Quick Look", action: refreshQuickLook)
+                Button("Refresh Finder", action: refreshFinder)
+            }
+            HStack {
+                Button("Extensions Settings…", action: openExtensionSettings)
+                CheckForUpdatesView(updater: updater)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(20)
+        .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 16))
+    }
+
+    // MARK: - Helpers
+
     private func openExtensionSettings() {
-        let urls = [
-            "x-apple.systempreferences:com.apple.ExtensionsPreferences",
-            "x-apple.systempreferences:com.apple.preferences.extensions"
-        ]
-        for string in urls {
+        for string in ["x-apple.systempreferences:com.apple.ExtensionsPreferences",
+                       "x-apple.systempreferences:com.apple.preferences.extensions"] {
             if let url = URL(string: string), NSWorkspace.shared.open(url) { return }
         }
     }
 
-    private func refreshQuickLook() {
+    private func refreshQuickLook() { run("/usr/bin/qlmanage", ["-r"]); run("/usr/bin/qlmanage", ["-r", "cache"]) }
+    private func refreshFinder() { run("/usr/bin/killall", ["Finder"]) }
+
+    private func run(_ path: String, _ args: [String]) {
         let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/qlmanage")
-        process.arguments = ["-r"]
+        process.executableURL = URL(fileURLWithPath: path)
+        process.arguments = args
         try? process.run()
     }
 }
@@ -115,8 +183,4 @@ private struct StepRow: View {
             Spacer()
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

@@ -30,5 +30,85 @@
 	<string>NSApplication</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
+
+	<!-- Sparkle auto-update. Replace SUPublicEDKey with the key printed by
+	     `generate_keys` before distributing; the private key stays in your Keychain. -->
+	<key>SUFeedURL</key>
+	<string>https://ariomoniri.github.io/ql-pkpass/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>WJW6oDc04x7UBySwM3UPsuzgcyJafp+682VWdVNSt/g=</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUScheduledCheckInterval</key>
+	<integer>86400</integer>
+
+	<!-- Document types the in-app viewer can open. -->
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Apple Wallet Pass</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.apple.pkpass-data</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Google / Samsung Wallet Pass</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.ariomoniri.google-wallet-pass</string>
+				<string>com.ariomoniri.samsung-wallet-pass</string>
+			</array>
+		</dict>
+	</array>
+
+	<!-- Exported UTIs for Google / Samsung Wallet passes (no official UTI exists). -->
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.ariomoniri.google-wallet-pass</string>
+			<key>UTTypeDescription</key>
+			<string>Google Wallet Pass</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.json</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>gwallet</string>
+					<string>gpass</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.ariomoniri.samsung-wallet-pass</string>
+			<key>UTTypeDescription</key>
+			<string>Samsung Wallet Pass</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.json</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>swcard</string>
+					<string>samsungpass</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>

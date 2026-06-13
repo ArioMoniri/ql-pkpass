@@ -21,6 +21,11 @@ settings:
     GENERATE_INFOPLIST_FILE: NO
     CLANG_ENABLE_MODULES: YES
 
+packages:
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: "2.7.0"
+
 targets:
   # ---------------------------------------------------------------------------
   # Dependency-free core: zip reader, model, renderers. Static framework so it
@@ -66,6 +71,7 @@ targets:
         embed: false
       - target: PkpassPreviewExtension
       - target: PkpassThumbnailExtension
+      - package: Sparkle
 
   # ---------------------------------------------------------------------------
   # Quick Look preview extension (spacebar preview).

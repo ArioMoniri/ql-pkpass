@@ -25,6 +25,8 @@
 			<key>QLSupportedContentTypes</key>
 			<array>
 				<string>com.apple.pkpass-data</string>
+				<string>com.ariomoniri.google-wallet-pass</string>
+				<string>com.ariomoniri.samsung-wallet-pass</string>
 			</array>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>

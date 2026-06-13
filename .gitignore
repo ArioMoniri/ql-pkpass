@@ -17,6 +17,10 @@ xcuserdata/
 .swiftpm/
 .build/
 
+# Sparkle signing — NEVER commit the private key
+sparkle_private_key*.txt
+*.private-key
+
 # Local tooling
 .claude-flow/
 .claude/

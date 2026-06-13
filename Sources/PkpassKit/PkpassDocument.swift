@@ -24,6 +24,40 @@ public enum PkpassError: Error, CustomStringConvertible, Sendable {
     }
 }
 
+/// Where a parsed pass came from.
+public enum PassSource: String, Sendable {
+    case applePkpass
+    case googleWallet
+    case samsungWallet
+
+    public var displayName: String {
+        switch self {
+        case .applePkpass: return "Apple Wallet"
+        case .googleWallet: return "Google Wallet"
+        case .samsungWallet: return "Samsung Wallet"
+        }
+    }
+
+    public var rawLabel: String {
+        switch self {
+        case .applePkpass: return "Raw pass.json"
+        case .googleWallet: return "Raw Google Wallet JSON"
+        case .samsungWallet: return "Raw Samsung Wallet JSON"
+        }
+    }
+}
+
+/// A single entry inside the `.pkpass` archive (for the file listing).
+public struct PkpassFile: Sendable, Equatable {
+    public let name: String
+    public let size: Int
+
+    /// A human-readable byte size, e.g. "3.1 KB".
+    public var formattedSize: String {
+        ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)
+    }
+}
+
 /// A fully parsed `.pkpass` document.
 public struct PkpassDocument: Sendable {
     /// The decoded pass.json.
@@ -32,10 +66,32 @@ public struct PkpassDocument: Sendable {
     public let rawPassJSON: String
     /// Every PNG image in the bundle, keyed by filename (e.g. `logo@2x.png`).
     public let images: [String: Data]
+    /// Every entry inside the archive, sorted by name (for the file listing).
+    public let files: [PkpassFile]
     /// Whether the archive carried a signature (a hint about authenticity).
     public let isSigned: Bool
+    /// Which wallet platform this pass came from.
+    public let source: PassSource
 
-    /// Parses a document from in-memory bytes.
+    /// Builds a document from already-parsed parts. Used by the Google/Samsung
+    /// parsers, which synthesise a `Pass` from their own JSON.
+    public init(
+        pass: Pass,
+        rawPassJSON: String,
+        images: [String: Data],
+        files: [PkpassFile],
+        isSigned: Bool,
+        source: PassSource
+    ) {
+        self.pass = pass
+        self.rawPassJSON = rawPassJSON
+        self.images = images
+        self.files = files
+        self.isSigned = isSigned
+        self.source = source
+    }
+
+    /// Parses an Apple `.pkpass` document from in-memory bytes.
     public init(data: Data) throws {
         let entries = try MiniZip.entries(from: data)
 
@@ -56,7 +112,11 @@ public struct PkpassDocument: Sendable {
             collected[name] = payload
         }
         self.images = collected
+        self.files = entries
+            .map { PkpassFile(name: $0.key, size: $0.value.count) }
+            .sorted { $0.name < $1.name }
         self.isSigned = entries["signature"] != nil
+        self.source = .applePkpass
     }
 
     /// The largest `.pkpass` file we'll even attempt to read.

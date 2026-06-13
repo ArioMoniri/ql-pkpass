@@ -16,7 +16,7 @@ public enum BarcodeRenderer {
 
     /// Renders the given barcode to PNG data, scaled up for a sharp preview.
     /// - Returns: PNG bytes, or `nil` if the format/message can't be rendered.
-    public static func pngData(for barcode: PassBarcode, targetSize: CGFloat = 480) -> Data? {
+    public static func pngData(for barcode: PassBarcode, targetSize: CGFloat = 720) -> Data? {
         guard let message = barcode.message, !message.isEmpty else { return nil }
         guard let base = ciImage(format: barcode.format, message: message, encoding: barcode.messageEncoding) else {
             return nil

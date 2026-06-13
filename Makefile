@@ -26,6 +26,9 @@ test: ## Run the unit tests
 sample: ## Generate a sample pass into examples/
 	swift scripts/make-sample-pass.swift
 
+icon: ## Regenerate the app icon set
+	swift scripts/make-app-icon.swift
+
 install: ## Build, install to /Applications, and refresh Quick Look
 	./scripts/install.sh
 

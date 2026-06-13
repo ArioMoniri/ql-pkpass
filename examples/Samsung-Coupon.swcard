@@ -1,0 +1,33 @@
+{
+  "card": {
+    "type": "coupon",
+    "subType": "others",
+    "data": [
+      {
+        "refId": "coupon-2026-0001",
+        "createdAt": 1749859200000,
+        "language": "en",
+        "attributes": {
+          "title": "20% Off Everything",
+          "providerName": "Acme Coffee",
+          "bgColor": "#0A1A4F",
+          "fontColor": "light",
+          "startDate": 1749859200000,
+          "endDate": 1752451200000,
+          "noticeDesc": "Valid in-store only. One per customer.",
+          "extendedFields": [
+            { "label": "Code", "value": "SAVE20", "order": 1 },
+            { "label": "Min. spend", "value": "$10", "order": 2 }
+          ],
+          "barcode": {
+            "value": "ACME-20OFF-7H3K9",
+            "serialType": "QRCODE",
+            "ptFormat": "QRCODESERIAL",
+            "ptSubFormat": "QR_CODE",
+            "errorCorrectionLevel": "M"
+          }
+        }
+      }
+    ]
+  }
+}
