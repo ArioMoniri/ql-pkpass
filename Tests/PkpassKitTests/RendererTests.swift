@@ -186,6 +186,23 @@ struct PassThumbnailRendererTests {
         #expect(image.size == size)
     }
 
+    @Test func drawsRichThumbnailWithBarcode() throws {
+        // At preview-pane sizes the thumbnail draws the full mini-pass (logo,
+        // a field, and the barcode). This exercises drawRich + barcode rendering.
+        let data = try Fixture.makePkpass(
+            passJSON: Fixture.boardingPassJSON,
+            images: ["logo.png": Fixture.png(width: 40, height: 20, color: .white)]
+        )
+        let document = try PkpassDocument(data: data)
+        let renderer = PassThumbnailRenderer(document: document)
+
+        let image = NSImage(size: NSSize(width: 512, height: 512))
+        image.lockFocus()
+        renderer.draw(in: CGRect(x: 0, y: 0, width: 512, height: 512))
+        image.unlockFocus()
+        #expect(image.size == NSSize(width: 512, height: 512))
+    }
+
     @Test func drawsMonogramWhenNoImages() throws {
         let data = try Fixture.makePkpass(passJSON: Fixture.storeCardJSON)
         let document = try PkpassDocument(data: data)

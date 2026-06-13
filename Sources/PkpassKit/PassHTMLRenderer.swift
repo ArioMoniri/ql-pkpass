@@ -348,28 +348,40 @@ public struct PassHTMLRenderer {
         .barcode-card.wide img { width: 100%; max-width: 360px; height: auto; display: block; image-rendering: pixelated; }
         .barcode-alt { margin-top: 8px; font-size: 12px; letter-spacing: 1px; color: var(--label); font-variant-numeric: tabular-nums; }
         .barcode-format { margin-top: 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px; opacity: 0.4; }
-        .panel {
-          margin-top: 14px; background: rgba(127,127,127,0.10); border: 0.5px solid rgba(127,127,127,0.18);
-          border-radius: 12px; overflow: hidden; color: inherit;
-        }
         body { color: #1c1c1e; }
         @media (prefers-color-scheme: dark) { body { color: #f2f2f7; background: #161618; } }
+        /* Inset-grouped "details" cards that adapt to the page text colour. */
+        .panel {
+          margin-top: 12px; border-radius: 14px; overflow: hidden;
+          border: 1px solid color-mix(in srgb, currentColor 13%, transparent);
+          background: color-mix(in srgb, currentColor 5%, transparent);
+        }
         .panel summary {
-          cursor: pointer; padding: 12px 14px; font-size: 13px; font-weight: 600; list-style: none; user-select: none;
+          cursor: pointer; list-style: none; user-select: none;
+          display: flex; align-items: center; gap: 8px;
+          padding: 13px 16px; font-size: 13.5px; font-weight: 600; letter-spacing: -0.1px;
+          transition: background 0.15s ease;
         }
         .panel summary::-webkit-details-marker { display: none; }
-        .panel summary::after { content: "⌄"; float: right; opacity: 0.5; transition: transform 0.2s; }
-        .panel[open] summary::after { transform: rotate(180deg); }
-        .panel-body { padding: 0 14px 14px; font-size: 13px; line-height: 1.5; }
-        .back-row { padding: 8px 0; border-top: 0.5px solid rgba(127,127,127,0.18); }
-        .back-row:first-child { border-top: none; }
-        .back-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; opacity: 0.6; margin-bottom: 2px; }
-        .back-value { word-break: break-word; }
-        .back-value a { color: #0a84ff; }
-        .meta { display: grid; gap: 6px; }
-        .meta-row { display: flex; justify-content: space-between; gap: 16px; }
-        .meta-row span:first-child { opacity: 0.55; }
-        .meta-row span:last-child { text-align: right; word-break: break-word; font-variant-numeric: tabular-nums; }
+        .panel summary::after {
+          content: "›"; margin-left: auto; font-size: 18px; font-weight: 600;
+          opacity: 0.32; transition: transform 0.2s ease;
+        }
+        .panel[open] summary::after { transform: rotate(90deg); }
+        .panel summary:hover { background: color-mix(in srgb, currentColor 6%, transparent); }
+        .panel-body { padding: 2px 16px 12px; font-size: 13px; line-height: 1.5; }
+        .back-row { padding: 11px 0; border-top: 1px solid color-mix(in srgb, currentColor 9%, transparent); }
+        .back-row:first-child { border-top: none; padding-top: 4px; }
+        .back-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.5; margin-bottom: 3px; }
+        .back-value { word-break: break-word; line-height: 1.45; }
+        .back-value a { color: #0a84ff; text-decoration: none; border-bottom: 1px solid color-mix(in srgb, #0a84ff 35%, transparent); }
+        .meta { display: flex; flex-direction: column; }
+        .meta-row { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; padding: 9px 0; border-top: 1px solid color-mix(in srgb, currentColor 9%, transparent); }
+        .meta-row:first-child { border-top: none; padding-top: 4px; }
+        .meta-row span:first-child { opacity: 0.5; flex: 0 0 auto; font-size: 12.5px; }
+        .meta-row span:last-child { text-align: right; word-break: break-word; font-variant-numeric: tabular-nums; font-weight: 500; }
+        .meta-row.total { font-weight: 700; }
+        .meta-row.total span:first-child { opacity: 0.78; }
         .raw {
           font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: 11px; line-height: 1.45;
           white-space: pre-wrap; word-break: break-word; opacity: 0.85;
