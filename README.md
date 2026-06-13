@@ -20,13 +20,32 @@ A `.pkpass` file is just a zipped-up Apple Wallet pass — a boarding pass, a co
 
 Select a pass in Finder, press <kbd>Space</kbd>, and you get a proper Wallet-style card: the right colours, the logo, every field group, a scan-quality barcode, the small print on the back, a listing of everything inside the file, and the raw JSON if you want to poke around. Finder shows a card thumbnail for it too. Everything is rendered on your Mac — **no network calls, ever.**
 
-> 🎬 **See it move:** the card below is a live animated SVG (it plays right here on GitHub). For the full thing — Lottie, Rive, and a WebGPU shader running in the browser — open the **[live demo page](https://ariomoniri.github.io/ql-pkpass/)**.
+> ▶️ **See it in action:** the **[live demo](https://ariomoniri.github.io/ql-pkpass/)** lets you click through real passes of every type (boarding, ticket, coupon, loyalty, store card — Apple/Google/Samsung) and watch the plugin render each one. The animated card below plays right here on GitHub.
 
 <div align="center">
 
 <img src="docs/assets/pass-card.svg" alt="Animated boarding pass preview" width="320">
 
 </div>
+
+---
+
+## ✨ Features
+
+- 🍎🟢🔵 **Three wallets** — Apple Wallet `.pkpass`, Google Wallet & Samsung Wallet passes
+- 🎟️ **Every pass type** — boarding passes, event tickets, coupons, loyalty & store cards, generic
+- 🎨 **True brand colours** rendered the way Apple Wallet would
+- 🏷️ **Logo, organization, and all field groups** — header, primary, secondary, auxiliary & back
+- 🔳 **Scan-quality barcodes** re-rendered from the pass — QR, PDF417, Aztec, Code 128 (true aspect ratio)
+- 👁️ **Glance in Finder** — the preview pane shows the card *before* you press Space
+- 🖼️ **Card thumbnails** in Finder instead of a generic icon
+- 🗂️ **File listing** of everything inside the archive + 🧾 the **raw JSON**
+- 📄 **Export to PDF** from the in-app viewer
+- 🪟 **Menu-bar app, no Dock clutter** — keeps running in the background, refresh Quick Look / Finder
+- 🔄 **Auto-updates** via Sparkle (Check for Updates)
+- 🔒 **100% on-device** — zero network access, zero runtime dependencies
+
+▶️ **[Try the interactive demo](https://ariomoniri.github.io/ql-pkpass/)** — click through real passes of every type.
 
 ---
 
@@ -169,9 +188,18 @@ A pass is a ZIP archive, but pulling in a third-party zip library for a sandboxe
 Two ways:
 
 - Open **pkpass Quick Look.app**, click **Open a pass & export PDF…**, pick any `.pkpass` / Google / Samsung file — the window flips into a viewer with a big **Export as PDF…** button.
-- Or right-click a pass in Finder → **Open With → pkpass Quick Look**.
+- Or right-click a pass in Finder → **Open With → pkpass Quick Look** → **Export as PDF…**.
 
 The viewer renders the exact same card the Quick Look preview shows and saves it through `WKWebView`'s PDF writer.
+
+<details>
+<summary>Why isn't the Export button inside the Space-bar preview itself?</summary>
+
+<br>
+
+It can't be — and I tested it. A third-party Quick Look **preview** runs in a locked-down WebView that **doesn't execute JavaScript, allow downloads, or let an extension add toolbar buttons**, and the system controls the window chrome (the "Open Pass" button there belongs to macOS's built-in *Pass Viewer*, not this app). So there's no supported way to put a working **Export** button in the preview pane. Export therefore lives one click away in the app, which renders the identical card and writes the PDF.
+
+</details>
 
 ---
 

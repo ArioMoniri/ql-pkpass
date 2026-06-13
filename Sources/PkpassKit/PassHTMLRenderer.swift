@@ -54,7 +54,7 @@ public struct PassHTMLRenderer {
           \(metaSection())
           \(filesSection())
           \(rawSection())
-          <footer class="credit">Rendered by <strong>pkpass Quick Look</strong> · no data leaves your Mac</footer>
+          <footer class="credit">Rendered by <strong>pkpass Quick Look</strong> · open in the app to export as PDF · no data leaves your Mac</footer>
         </main>
         </body>
         </html>

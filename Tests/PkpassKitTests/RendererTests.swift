@@ -157,7 +157,9 @@ struct PassHTMLRendererTests {
           "generic": { "primaryFields": [ { "key": "k", "label": "L", "value": "<b>bad</b>" } ] } }
         """
         let html = try render(json)
-        #expect(!html.contains("<script>"))
+        // The malicious org name must be escaped — not injected as a raw tag.
+        #expect(html.contains("Acme &lt;script&gt;"))
+        #expect(!html.contains("Acme <script>"))
         #expect(html.contains("&lt;b&gt;bad&lt;/b&gt;"))
     }
 
