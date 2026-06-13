@@ -6,7 +6,7 @@
 
 **Peek inside Apple Wallet, Google Wallet & Samsung Wallet passes from Finder — just hit the Space bar.**
 
-![macOS 12+](https://img.shields.io/badge/macOS-12%2B-111?logo=apple&logoColor=white)
+![macOS 13+](https://img.shields.io/badge/macOS-13%2B-111?logo=apple&logoColor=white)
 ![Swift 6](https://img.shields.io/badge/Swift-6-f05138?logo=swift&logoColor=white)
 ![Quick Look](https://img.shields.io/badge/Quick%20Look-preview%20%2B%20thumbnail-1a82dc)
 ![Wallets](https://img.shields.io/badge/wallets-Apple%20·%20Google%20·%20Samsung-34a853)
@@ -32,7 +32,7 @@ Select a pass in Finder, press <kbd>Space</kbd>, and you get a proper Wallet-sty
 
 ## ⚡ Install
 
-You'll need macOS 12 or newer and Xcode (it ships the build tools). Then:
+You'll need macOS 13 or newer and Xcode (it ships the build tools). *(The Quick Look extensions themselves run on macOS 12+; the menu-bar helper app needs 13.)* Then:
 
 ```bash
 git clone https://github.com/ArioMoniri/ql-pkpass.git
@@ -91,6 +91,7 @@ The preview adapts to whatever style the pass declares — boarding pass, event 
 | --- | --- |
 | 🎨 **Brand colours** | The pass's own `backgroundColor` / `foregroundColor` / `labelColor`, the way Wallet renders them |
 | 🏷️ **Logo & organization** | The logo image (or `logoText`) plus the organization name |
+| 👁️ **Glance in Finder** | The preview pane shows the card before you even press Space |
 | 🧾 **Every field group** | Header, primary, secondary, auxiliary, and back fields — laid out like the real card |
 | ✈️ **Boarding passes** | Big origin → destination with the right transit icon |
 | 🔳 **Barcode** | Re-rendered from the pass at **scan-quality** resolution, keeping each symbology's true shape — QR, PDF417, Aztec, Code 128 |
@@ -166,6 +167,12 @@ A pass is a ZIP archive, but pulling in a third-party zip library for a sandboxe
 ## 📄 Export a pass as PDF
 
 Open **pkpass Quick Look.app**, click **Open a pass & export PDF…**, pick any `.pkpass` / Google / Samsung file, and hit **Export PDF…**. The viewer renders the exact same card the Quick Look preview shows and saves it through `WKWebView`'s PDF writer.
+
+---
+
+## 🪟 Lives in the menu bar, not the Dock
+
+The helper app runs as a **menu-bar accessory** (`LSUIElement`) — **no Dock icon**. Launch it and it tucks into the menu bar (wallet icon) with quick actions: open the window, Check for Updates, Refresh Quick Look, Refresh Finder, Quit. **Closing the window doesn't quit it** — it keeps running quietly in the background. (The Quick Look extensions themselves are separate system processes, so previews work whether or not the app is open.)
 
 ---
 

@@ -619,6 +619,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ariomoniri.PkpassQuickLook;
 				SDKROOT = macosx;
 			};
@@ -726,6 +727,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ariomoniri.PkpassQuickLook;
 				SDKROOT = macosx;
 			};

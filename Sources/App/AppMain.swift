@@ -8,26 +8,62 @@
 //
 
 import SwiftUI
-import Combine
 import Sparkle
 
 @main
 struct PkpassQuickLookApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+
     // Owns the Sparkle updater for the app's lifetime.
     private let updaterController = SPUStandardUpdaterController(
         startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil
     )
 
     var body: some Scene {
-        WindowGroup("pkpass Quick Look") {
+        // A single on-demand window — there's no Dock icon, so closing it just
+        // hides it; the app stays alive in the menu bar (see AppDelegate).
+        Window("pkpass Quick Look", id: "main") {
             ContentView(updater: updaterController.updater)
-                .frame(minWidth: 520, idealWidth: 560, minHeight: 600, idealHeight: 680)
+                .frame(minWidth: 520, idealWidth: 560, minHeight: 600, idealHeight: 700)
         }
-        .commands {
-            CommandGroup(after: .appInfo) {
-                CheckForUpdatesView(updater: updaterController.updater)
-            }
+        .windowResizability(.contentSize)
+
+        // Menu-bar presence so the (Dock-less) helper is always reachable.
+        MenuBarExtra("pkpass Quick Look", systemImage: "wallet.pass.fill") {
+            MenuBarContent(updater: updaterController.updater)
         }
+    }
+}
+
+/// Runs as a menu-bar accessory: no Dock icon, survives window close.
+final class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        NSApp.setActivationPolicy(.accessory) // no Dock icon
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        false // keep running in the background when the window is closed
+    }
+}
+
+// MARK: - Menu-bar menu
+
+struct MenuBarContent: View {
+    let updater: SPUUpdater
+    @Environment(\.openWindow) private var openWindow
+
+    var body: some View {
+        Button("Open pkpass Quick Look") {
+            openWindow(id: "main")
+            NSApp.activate(ignoringOtherApps: true)
+        }
+        Divider()
+        CheckForUpdatesView(updater: updater)
+        Button("Refresh Quick Look", action: Helpers.refreshQuickLook)
+        Button("Refresh Finder", action: Helpers.refreshFinder)
+        Divider()
+        Button("Quit pkpass Quick Look") { NSApp.terminate(nil) }
     }
 }
 
@@ -40,6 +76,31 @@ struct CheckForUpdatesView: View {
         // Sparkle guards against overlapping checks internally, so the button
         // can stay enabled — this avoids a Swift 6 main-actor key-path issue.
         Button("Check for Updates…") { updater.checkForUpdates() }
+    }
+}
+
+// MARK: - Shared helpers
+
+enum Helpers {
+    static func openExtensionSettings() {
+        for string in ["x-apple.systempreferences:com.apple.ExtensionsPreferences",
+                       "x-apple.systempreferences:com.apple.preferences.extensions"] {
+            if let url = URL(string: string), NSWorkspace.shared.open(url) { return }
+        }
+    }
+
+    static func refreshQuickLook() {
+        run("/usr/bin/qlmanage", ["-r"])
+        run("/usr/bin/qlmanage", ["-r", "cache"])
+    }
+
+    static func refreshFinder() { run("/usr/bin/killall", ["Finder"]) }
+
+    private static func run(_ path: String, _ args: [String]) {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: path)
+        process.arguments = args
+        try? process.run()
     }
 }
 
@@ -131,36 +192,17 @@ struct ContentView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             HStack {
-                Button("Refresh Quick Look", action: refreshQuickLook)
-                Button("Refresh Finder", action: refreshFinder)
+                Button("Refresh Quick Look", action: Helpers.refreshQuickLook)
+                Button("Refresh Finder", action: Helpers.refreshFinder)
             }
             HStack {
-                Button("Extensions Settings…", action: openExtensionSettings)
+                Button("Extensions Settings…", action: Helpers.openExtensionSettings)
                 CheckForUpdatesView(updater: updater)
             }
         }
         .frame(maxWidth: .infinity)
         .padding(20)
         .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 16))
-    }
-
-    // MARK: - Helpers
-
-    private func openExtensionSettings() {
-        for string in ["x-apple.systempreferences:com.apple.ExtensionsPreferences",
-                       "x-apple.systempreferences:com.apple.preferences.extensions"] {
-            if let url = URL(string: string), NSWorkspace.shared.open(url) { return }
-        }
-    }
-
-    private func refreshQuickLook() { run("/usr/bin/qlmanage", ["-r"]); run("/usr/bin/qlmanage", ["-r", "cache"]) }
-    private func refreshFinder() { run("/usr/bin/killall", ["Finder"]) }
-
-    private func run(_ path: String, _ args: [String]) {
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: path)
-        process.arguments = args
-        try? process.run()
     }
 }
 

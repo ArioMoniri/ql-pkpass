@@ -29,6 +29,9 @@ sample: ## Generate a sample pass into examples/
 icon: ## Regenerate the app icon set
 	swift scripts/make-app-icon.swift
 
+gallery: ## Regenerate the demo-page pass-card gallery
+	swiftc Sources/PkpassKit/*.swift scripts/make-gallery.swift -o /tmp/ql-gallery && /tmp/ql-gallery
+
 install: ## Build, install to /Applications, and refresh Quick Look
 	./scripts/install.sh
 
