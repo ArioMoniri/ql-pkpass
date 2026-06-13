@@ -1,0 +1,142 @@
+name: PkpassQuickLook
+options:
+  bundleIdPrefix: com.ariomoniri
+  deploymentTarget:
+    macOS: "12.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+    PROVISIONING_PROFILE_SPECIFIER: ""
+    ENABLE_HARDENED_RUNTIME: NO
+    ALWAYS_SEARCH_USER_PATHS: NO
+    GENERATE_INFOPLIST_FILE: NO
+    CLANG_ENABLE_MODULES: YES
+
+targets:
+  # ---------------------------------------------------------------------------
+  # Dependency-free core: zip reader, model, renderers. Static framework so it
+  # links straight into the app, both extensions, and the test bundle without
+  # any runtime embedding.
+  # ---------------------------------------------------------------------------
+  PkpassKit:
+    type: framework
+    platform: macOS
+    sources:
+      - Sources/PkpassKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ariomoniri.PkpassKit
+        MACH_O_TYPE: staticlib
+        DEFINES_MODULE: YES
+        SKIP_INSTALL: YES
+        CODE_SIGNING_ALLOWED: NO
+        GENERATE_INFOPLIST_FILE: YES
+
+  # ---------------------------------------------------------------------------
+  # Host application — required container for the Quick Look extensions.
+  # ---------------------------------------------------------------------------
+  PkpassQuickLook:
+    type: application
+    platform: macOS
+    sources:
+      - Sources/App
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ariomoniri.PkpassQuickLook
+        INFOPLIST_FILE: Sources/App/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Sources/App/App.entitlements
+        COMBINE_HIDPI_IMAGES: YES
+        ENABLE_PREVIEWS: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      configs:
+        Release:
+          # Don't ship the debug-only get-task-allow entitlement in Release.
+          CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
+    dependencies:
+      - target: PkpassKit
+        embed: false
+      - target: PkpassPreviewExtension
+      - target: PkpassThumbnailExtension
+
+  # ---------------------------------------------------------------------------
+  # Quick Look preview extension (spacebar preview).
+  # ---------------------------------------------------------------------------
+  PkpassPreviewExtension:
+    type: app-extension
+    platform: macOS
+    sources:
+      - Sources/PreviewExtension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ariomoniri.PkpassQuickLook.Preview
+        INFOPLIST_FILE: Sources/PreviewExtension/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Sources/PreviewExtension/Preview.entitlements
+      configs:
+        Release:
+          CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
+    dependencies:
+      - target: PkpassKit
+        embed: false
+
+  # ---------------------------------------------------------------------------
+  # Quick Look thumbnail extension (Finder icons).
+  # ---------------------------------------------------------------------------
+  PkpassThumbnailExtension:
+    type: app-extension
+    platform: macOS
+    sources:
+      - Sources/ThumbnailExtension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ariomoniri.PkpassQuickLook.Thumbnail
+        INFOPLIST_FILE: Sources/ThumbnailExtension/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Sources/ThumbnailExtension/Thumbnail.entitlements
+      configs:
+        Release:
+          CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
+    dependencies:
+      - target: PkpassKit
+        embed: false
+
+  # ---------------------------------------------------------------------------
+  # Unit tests for the core (logic tests, no host app required).
+  # ---------------------------------------------------------------------------
+  PkpassKitTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/PkpassKitTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ariomoniri.PkpassKitTests
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGNING_ALLOWED: NO
+    dependencies:
+      - target: PkpassKit
+        embed: false
+
+schemes:
+  PkpassKit:
+    build:
+      targets:
+        PkpassKit: all
+        PkpassKitTests: all
+    test:
+      targets:
+        - PkpassKitTests
+      gatherCoverageData: true
+  PkpassQuickLook:
+    build:
+      targets:
+        PkpassQuickLook: all
+    run:
+      config: Debug

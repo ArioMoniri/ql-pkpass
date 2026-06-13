@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 470" width="360" height="470" role="img" aria-label="Animated boarding pass preview">
+  <defs>
+    <linearGradient id="card" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#1a82dc"/>
+      <stop offset="1" stop-color="#0f5bb0"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="round"><rect width="360" height="470" rx="22"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#round)">
+    <rect width="360" height="470" fill="url(#card)"/>
+
+    <!-- sweeping shine -->
+    <rect x="-360" y="0" width="360" height="470" fill="url(#shine)">
+      <animate attributeName="x" values="-360;360" dur="3.6s" begin="0.8s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- header -->
+    <text x="26" y="48" font-family="-apple-system, Segoe UI, sans-serif" font-size="22" font-weight="800" fill="#fff">✈ SKYLINE</text>
+    <text x="334" y="36" text-anchor="end" font-family="-apple-system, sans-serif" font-size="10" fill="#cfe6ff" letter-spacing="1">GATE</text>
+    <text x="334" y="54" text-anchor="end" font-family="-apple-system, sans-serif" font-size="18" font-weight="700" fill="#fff">A12</text>
+
+    <line x1="26" y1="74" x2="334" y2="74" stroke="#ffffff" stroke-opacity="0.18"/>
+
+    <!-- primary: origin -> destination -->
+    <text x="26" y="108" font-family="-apple-system, sans-serif" font-size="11" fill="#cfe6ff" letter-spacing="0.5">SAN FRANCISCO</text>
+    <text x="26" y="150" font-family="-apple-system, sans-serif" font-size="44" font-weight="800" fill="#fff">SFO</text>
+
+    <text x="334" y="108" text-anchor="end" font-family="-apple-system, sans-serif" font-size="11" fill="#cfe6ff">LONDON</text>
+    <text x="334" y="150" text-anchor="end" font-family="-apple-system, sans-serif" font-size="44" font-weight="800" fill="#fff">LHR</text>
+
+    <!-- mid plane -->
+    <g transform="translate(180,128)">
+      <g transform="translate(-12,-12)">
+        <path d="M2 12 L22 7 L19 12 L22 17 Z" fill="#ffffff"/>
+        <animateTransform attributeName="transform" type="translate" values="-28,-12; -4,-12; -28,-12" dur="2.8s" repeatCount="indefinite"/>
+      </g>
+    </g>
+
+    <!-- secondary fields -->
+    <text x="26" y="196" font-family="-apple-system, sans-serif" font-size="10" fill="#cfe6ff" letter-spacing="0.5">PASSENGER</text>
+    <text x="26" y="216" font-family="-apple-system, sans-serif" font-size="15" font-weight="600" fill="#fff">J. APPLESEED</text>
+    <text x="200" y="196" font-family="-apple-system, sans-serif" font-size="10" fill="#cfe6ff" letter-spacing="0.5">SEAT</text>
+    <text x="200" y="216" font-family="-apple-system, sans-serif" font-size="15" font-weight="600" fill="#fff">2A</text>
+    <text x="290" y="196" font-family="-apple-system, sans-serif" font-size="10" fill="#cfe6ff" letter-spacing="0.5">ZONE</text>
+    <text x="290" y="216" font-family="-apple-system, sans-serif" font-size="15" font-weight="600" fill="#fff">1</text>
+
+    <!-- barcode card -->
+    <g transform="translate(96,250)">
+      <rect width="168" height="168" rx="14" fill="#ffffff">
+        <animate attributeName="opacity" values="0.85;1;0.85" dur="2.4s" repeatCount="indefinite"/>
+      </rect>
+      <g fill="#0f5bb0" transform="translate(20,20)">
+        <rect x="0" y="0" width="40" height="40"/><rect x="10" y="10" width="20" height="20" fill="#fff"/>
+        <rect x="88" y="0" width="40" height="40"/><rect x="98" y="10" width="20" height="20" fill="#fff"/>
+        <rect x="0" y="88" width="40" height="40"/><rect x="10" y="98" width="20" height="20" fill="#fff"/>
+        <rect x="56" y="8" width="8" height="8"/><rect x="72" y="20" width="8" height="8"/>
+        <rect x="56" y="40" width="8" height="8"/><rect x="88" y="56" width="8" height="8"/>
+        <rect x="104" y="64" width="8" height="8"/><rect x="56" y="72" width="8" height="8"/>
+        <rect x="72" y="88" width="8" height="8"/><rect x="88" y="96" width="8" height="8"/>
+        <rect x="104" y="104" width="8" height="8"/><rect x="64" y="104" width="8" height="8"/>
+        <rect x="56" y="120" width="8" height="8"/><rect x="96" y="120" width="8" height="8"/>
+        <rect x="120" y="88" width="8" height="8"/><rect x="120" y="120" width="8" height="8"/>
+      </g>
+    </g>
+    <text x="180" y="438" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="12" fill="#cfe6ff" letter-spacing="1">SK 219 · Seat 2A</text>
+  </g>
+</svg>

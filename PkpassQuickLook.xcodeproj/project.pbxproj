@@ -1,0 +1,889 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1539F655EAA6D55BBFDBF14F /* PassColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9142D8531BE2546B55CE29A /* PassColor.swift */; };
+		25B5E7A4D74EED1988C2F73D /* PassColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C46C7A8F11A8259D40DE29 /* PassColorTests.swift */; };
+		25C18CF282E5B572B1AFD982 /* PassModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB67C3383EFC9E251D2CBB9 /* PassModel.swift */; };
+		2C7F6FF0D8F8FC0B5475CA7F /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F02D03F39F9FF81C1C2A8A8 /* ThumbnailProvider.swift */; };
+		2F2E748C764AD5EFF17FFC6A /* PkpassPreviewExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EE357CE7400BB27AC9F43C8D /* PkpassPreviewExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3BC788199829402C41340325 /* MiniZipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0724BBAD63E09A34A2875282 /* MiniZipTests.swift */; };
+		5ACA0B5AA0D917A408492B8C /* PassThumbnailRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1A2310A3D1AE33FCBE853E /* PassThumbnailRenderer.swift */; };
+		64A6049EBB52195BCCD3B8C5 /* PassModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5623ECC21DBA7EF79853A581 /* PassModelTests.swift */; };
+		64AF93C0133F8EE885718685 /* PkpassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B621855950D64C1F1E8E836 /* PkpassKit.framework */; };
+		76D188895BB65608B0EB4202 /* PkpassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B621855950D64C1F1E8E836 /* PkpassKit.framework */; };
+		88A3D1CD1FAEAC581D76F033 /* PassHTMLRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789614E8EE1FD69C88723289 /* PassHTMLRenderer.swift */; };
+		9A57CB1DF7C6D2FF6D0B7013 /* TestFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46AEEAE7447C43E6DD437E0 /* TestFixtures.swift */; };
+		9D7CED8EC19E30174A33FDE1 /* RendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED6F92D007DDFEE46B1354A /* RendererTests.swift */; };
+		B15330D353A00A1D44A02DE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 368DF42147F1DD7FB24CA8EB /* Assets.xcassets */; };
+		BB11F7A56C8E1078F10A9148 /* MiniZip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F10AAE5072A2DC857F57CD /* MiniZip.swift */; };
+		BD8D75391B2A993E5DDCC1D9 /* PkpassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B621855950D64C1F1E8E836 /* PkpassKit.framework */; };
+		C000C5722B81E35B15D10C13 /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D929AB7B6478BFD3C05686 /* PreviewProvider.swift */; };
+		D2913C362163FB80F91E2A12 /* PkpassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B621855950D64C1F1E8E836 /* PkpassKit.framework */; };
+		D98AF470C7458583E19589BE /* PkpassDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D078528418A8EC2684F5D0F /* PkpassDocument.swift */; };
+		E9411F9D2F6720BB54B80104 /* AppMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD28E705C2D2289DE6CD991F /* AppMain.swift */; };
+		F876BBFD2A9B305C060AA232 /* BarcodeRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6750E5600EC7A03C7F83EDEA /* BarcodeRenderer.swift */; };
+		FD25C7B6CD3E6E1E05F5DD2E /* PkpassThumbnailExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 68CF7CDEE4E713A37E46C74B /* PkpassThumbnailExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1B1ACB53123E79ABE602DABC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6EF8697C5CA44DFF559B797 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AF782C2E4FF98C1CAFE7A3A7;
+			remoteInfo = PkpassPreviewExtension;
+		};
+		51827CEC6EC6332ECE174168 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6EF8697C5CA44DFF559B797 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F3CE79FF7B3ECCB40F865610;
+			remoteInfo = PkpassKit;
+		};
+		77BBD914050C8E4097433BD8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6EF8697C5CA44DFF559B797 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F3CE79FF7B3ECCB40F865610;
+			remoteInfo = PkpassKit;
+		};
+		815657DFACD719F5EDB80A2F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6EF8697C5CA44DFF559B797 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F3CE79FF7B3ECCB40F865610;
+			remoteInfo = PkpassKit;
+		};
+		A2BE9A649EF275312FFB20A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6EF8697C5CA44DFF559B797 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F0573078B3B95158E3D50637;
+			remoteInfo = PkpassThumbnailExtension;
+		};
+		AD848A8BD3DF78D05F91CADD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6EF8697C5CA44DFF559B797 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F3CE79FF7B3ECCB40F865610;
+			remoteInfo = PkpassKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		075F05F620B2BFEB2273C2C6 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2F2E748C764AD5EFF17FFC6A /* PkpassPreviewExtension.appex in Embed Foundation Extensions */,
+				FD25C7B6CD3E6E1E05F5DD2E /* PkpassThumbnailExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0724BBAD63E09A34A2875282 /* MiniZipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniZipTests.swift; sourceTree = "<group>"; };
+		0F3325514ED534F8DACF3029 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1FA65190D1C8121D35B81BFF /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
+		2F02D03F39F9FF81C1C2A8A8 /* ThumbnailProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailProvider.swift; sourceTree = "<group>"; };
+		368DF42147F1DD7FB24CA8EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4570DAC9297196A5736493AE /* PkpassKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PkpassKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4ED6F92D007DDFEE46B1354A /* RendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererTests.swift; sourceTree = "<group>"; };
+		5623ECC21DBA7EF79853A581 /* PassModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassModelTests.swift; sourceTree = "<group>"; };
+		56C46C7A8F11A8259D40DE29 /* PassColorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassColorTests.swift; sourceTree = "<group>"; };
+		6750E5600EC7A03C7F83EDEA /* BarcodeRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeRenderer.swift; sourceTree = "<group>"; };
+		68CF7CDEE4E713A37E46C74B /* PkpassThumbnailExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PkpassThumbnailExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B621855950D64C1F1E8E836 /* PkpassKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PkpassKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D078528418A8EC2684F5D0F /* PkpassDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PkpassDocument.swift; sourceTree = "<group>"; };
+		74A2B28F792FD36C74B3017F /* Preview.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Preview.entitlements; sourceTree = "<group>"; };
+		789614E8EE1FD69C88723289 /* PassHTMLRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassHTMLRenderer.swift; sourceTree = "<group>"; };
+		78D9772C9845D1513A3D6F63 /* PkpassQuickLook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PkpassQuickLook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		86A9C14D21378164F82C176F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8F7ABB7C05D7D3AC838BE019 /* Thumbnail.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Thumbnail.entitlements; sourceTree = "<group>"; };
+		8FB67C3383EFC9E251D2CBB9 /* PassModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassModel.swift; sourceTree = "<group>"; };
+		A8F10AAE5072A2DC857F57CD /* MiniZip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniZip.swift; sourceTree = "<group>"; };
+		AC1A2310A3D1AE33FCBE853E /* PassThumbnailRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassThumbnailRenderer.swift; sourceTree = "<group>"; };
+		AD28E705C2D2289DE6CD991F /* AppMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMain.swift; sourceTree = "<group>"; };
+		C46AEEAE7447C43E6DD437E0 /* TestFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFixtures.swift; sourceTree = "<group>"; };
+		C710FA327A23B95123BC3708 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D9142D8531BE2546B55CE29A /* PassColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassColor.swift; sourceTree = "<group>"; };
+		EE357CE7400BB27AC9F43C8D /* PkpassPreviewExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PkpassPreviewExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8D929AB7B6478BFD3C05686 /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3EB9ADE8241BDE39F826C05B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76D188895BB65608B0EB4202 /* PkpassKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50D09295CF8CD479E74667CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64AF93C0133F8EE885718685 /* PkpassKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE0D999D7A6DD10EE6A00D06 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2913C362163FB80F91E2A12 /* PkpassKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6688CB7617745BEFAA1AF01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD8D75391B2A993E5DDCC1D9 /* PkpassKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2A736F0490E859F2CB6049F4 /* PkpassKit */ = {
+			isa = PBXGroup;
+			children = (
+				6750E5600EC7A03C7F83EDEA /* BarcodeRenderer.swift */,
+				A8F10AAE5072A2DC857F57CD /* MiniZip.swift */,
+				D9142D8531BE2546B55CE29A /* PassColor.swift */,
+				789614E8EE1FD69C88723289 /* PassHTMLRenderer.swift */,
+				8FB67C3383EFC9E251D2CBB9 /* PassModel.swift */,
+				AC1A2310A3D1AE33FCBE853E /* PassThumbnailRenderer.swift */,
+				6D078528418A8EC2684F5D0F /* PkpassDocument.swift */,
+			);
+			path = PkpassKit;
+			sourceTree = "<group>";
+		};
+		4E4F265019CD32E929560505 /* PkpassKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				0724BBAD63E09A34A2875282 /* MiniZipTests.swift */,
+				56C46C7A8F11A8259D40DE29 /* PassColorTests.swift */,
+				5623ECC21DBA7EF79853A581 /* PassModelTests.swift */,
+				4ED6F92D007DDFEE46B1354A /* RendererTests.swift */,
+				C46AEEAE7447C43E6DD437E0 /* TestFixtures.swift */,
+			);
+			path = PkpassKitTests;
+			sourceTree = "<group>";
+		};
+		8706D8E749873669C0A0C6FB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6B621855950D64C1F1E8E836 /* PkpassKit.framework */,
+				4570DAC9297196A5736493AE /* PkpassKitTests.xctest */,
+				EE357CE7400BB27AC9F43C8D /* PkpassPreviewExtension.appex */,
+				78D9772C9845D1513A3D6F63 /* PkpassQuickLook.app */,
+				68CF7CDEE4E713A37E46C74B /* PkpassThumbnailExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A5EF875CE07DE9B712953BE3 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1FA65190D1C8121D35B81BFF /* App.entitlements */,
+				AD28E705C2D2289DE6CD991F /* AppMain.swift */,
+				368DF42147F1DD7FB24CA8EB /* Assets.xcassets */,
+				86A9C14D21378164F82C176F /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A69E955CBF77B170C1EA942E /* ThumbnailExtension */ = {
+			isa = PBXGroup;
+			children = (
+				C710FA327A23B95123BC3708 /* Info.plist */,
+				8F7ABB7C05D7D3AC838BE019 /* Thumbnail.entitlements */,
+				2F02D03F39F9FF81C1C2A8A8 /* ThumbnailProvider.swift */,
+			);
+			path = ThumbnailExtension;
+			sourceTree = "<group>";
+		};
+		A8ED81D2700361789FB7DE80 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				A5EF875CE07DE9B712953BE3 /* App */,
+				2A736F0490E859F2CB6049F4 /* PkpassKit */,
+				BC12CB0F7795429AB3737D7F /* PreviewExtension */,
+				A69E955CBF77B170C1EA942E /* ThumbnailExtension */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		BC12CB0F7795429AB3737D7F /* PreviewExtension */ = {
+			isa = PBXGroup;
+			children = (
+				0F3325514ED534F8DACF3029 /* Info.plist */,
+				74A2B28F792FD36C74B3017F /* Preview.entitlements */,
+				F8D929AB7B6478BFD3C05686 /* PreviewProvider.swift */,
+			);
+			path = PreviewExtension;
+			sourceTree = "<group>";
+		};
+		CF1DD5128652AC41C40C8876 = {
+			isa = PBXGroup;
+			children = (
+				A8ED81D2700361789FB7DE80 /* Sources */,
+				DA2E8DAF82519AFD58813F98 /* Tests */,
+				8706D8E749873669C0A0C6FB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DA2E8DAF82519AFD58813F98 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				4E4F265019CD32E929560505 /* PkpassKitTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		14161F279DC31A2A486B4746 /* PkpassQuickLook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 882325CB2FEA36E6E849250A /* Build configuration list for PBXNativeTarget "PkpassQuickLook" */;
+			buildPhases = (
+				90BF913855C0EFAD274C0B08 /* Sources */,
+				FE83C5A77E962F0F5EC59C96 /* Resources */,
+				3EB9ADE8241BDE39F826C05B /* Frameworks */,
+				075F05F620B2BFEB2273C2C6 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8D26585C7738D7CD62D4E3D3 /* PBXTargetDependency */,
+				E09E3081063678A73D19FE18 /* PBXTargetDependency */,
+				272B9137A1D4853456DF32B6 /* PBXTargetDependency */,
+			);
+			name = PkpassQuickLook;
+			packageProductDependencies = (
+			);
+			productName = PkpassQuickLook;
+			productReference = 78D9772C9845D1513A3D6F63 /* PkpassQuickLook.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AF782C2E4FF98C1CAFE7A3A7 /* PkpassPreviewExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1120D74D28E58195F5CA8968 /* Build configuration list for PBXNativeTarget "PkpassPreviewExtension" */;
+			buildPhases = (
+				B2652A6EB147F40F4D8E4511 /* Sources */,
+				F6688CB7617745BEFAA1AF01 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				51D4A0E00D2F0E0293E47FA4 /* PBXTargetDependency */,
+			);
+			name = PkpassPreviewExtension;
+			packageProductDependencies = (
+			);
+			productName = PkpassPreviewExtension;
+			productReference = EE357CE7400BB27AC9F43C8D /* PkpassPreviewExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		F036BEE813080F86AF18D5C3 /* PkpassKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 840CDE7B42DCD05CBDEADBF6 /* Build configuration list for PBXNativeTarget "PkpassKitTests" */;
+			buildPhases = (
+				87E128DEE5D9F60E8D6DD8B2 /* Sources */,
+				DE0D999D7A6DD10EE6A00D06 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9A8EC213DED9302A38E508F6 /* PBXTargetDependency */,
+			);
+			name = PkpassKitTests;
+			packageProductDependencies = (
+			);
+			productName = PkpassKitTests;
+			productReference = 4570DAC9297196A5736493AE /* PkpassKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F0573078B3B95158E3D50637 /* PkpassThumbnailExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 54CF39F0384AC01CD8B9AC0E /* Build configuration list for PBXNativeTarget "PkpassThumbnailExtension" */;
+			buildPhases = (
+				6976D0B8F17E58C213E52670 /* Sources */,
+				50D09295CF8CD479E74667CA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1427C75AFFFC842B05560443 /* PBXTargetDependency */,
+			);
+			name = PkpassThumbnailExtension;
+			packageProductDependencies = (
+			);
+			productName = PkpassThumbnailExtension;
+			productReference = 68CF7CDEE4E713A37E46C74B /* PkpassThumbnailExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		F3CE79FF7B3ECCB40F865610 /* PkpassKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9EDA18592F5F9D51D97EE6D /* Build configuration list for PBXNativeTarget "PkpassKit" */;
+			buildPhases = (
+				1EB8C1E57B64C9AD8CF17E92 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PkpassKit;
+			packageProductDependencies = (
+			);
+			productName = PkpassKit;
+			productReference = 6B621855950D64C1F1E8E836 /* PkpassKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E6EF8697C5CA44DFF559B797 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					14161F279DC31A2A486B4746 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					AF782C2E4FF98C1CAFE7A3A7 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					F036BEE813080F86AF18D5C3 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					F0573078B3B95158E3D50637 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					F3CE79FF7B3ECCB40F865610 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = CC73A44A937B2AEE329F3C28 /* Build configuration list for PBXProject "PkpassQuickLook" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CF1DD5128652AC41C40C8876;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8706D8E749873669C0A0C6FB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F3CE79FF7B3ECCB40F865610 /* PkpassKit */,
+				F036BEE813080F86AF18D5C3 /* PkpassKitTests */,
+				AF782C2E4FF98C1CAFE7A3A7 /* PkpassPreviewExtension */,
+				14161F279DC31A2A486B4746 /* PkpassQuickLook */,
+				F0573078B3B95158E3D50637 /* PkpassThumbnailExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FE83C5A77E962F0F5EC59C96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B15330D353A00A1D44A02DE4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1EB8C1E57B64C9AD8CF17E92 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F876BBFD2A9B305C060AA232 /* BarcodeRenderer.swift in Sources */,
+				BB11F7A56C8E1078F10A9148 /* MiniZip.swift in Sources */,
+				1539F655EAA6D55BBFDBF14F /* PassColor.swift in Sources */,
+				88A3D1CD1FAEAC581D76F033 /* PassHTMLRenderer.swift in Sources */,
+				25C18CF282E5B572B1AFD982 /* PassModel.swift in Sources */,
+				5ACA0B5AA0D917A408492B8C /* PassThumbnailRenderer.swift in Sources */,
+				D98AF470C7458583E19589BE /* PkpassDocument.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6976D0B8F17E58C213E52670 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C7F6FF0D8F8FC0B5475CA7F /* ThumbnailProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87E128DEE5D9F60E8D6DD8B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BC788199829402C41340325 /* MiniZipTests.swift in Sources */,
+				25B5E7A4D74EED1988C2F73D /* PassColorTests.swift in Sources */,
+				64A6049EBB52195BCCD3B8C5 /* PassModelTests.swift in Sources */,
+				9D7CED8EC19E30174A33FDE1 /* RendererTests.swift in Sources */,
+				9A57CB1DF7C6D2FF6D0B7013 /* TestFixtures.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		90BF913855C0EFAD274C0B08 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9411F9D2F6720BB54B80104 /* AppMain.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2652A6EB147F40F4D8E4511 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C000C5722B81E35B15D10C13 /* PreviewProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1427C75AFFFC842B05560443 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F3CE79FF7B3ECCB40F865610 /* PkpassKit */;
+			targetProxy = 77BBD914050C8E4097433BD8 /* PBXContainerItemProxy */;
+		};
+		272B9137A1D4853456DF32B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F0573078B3B95158E3D50637 /* PkpassThumbnailExtension */;
+			targetProxy = A2BE9A649EF275312FFB20A2 /* PBXContainerItemProxy */;
+		};
+		51D4A0E00D2F0E0293E47FA4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F3CE79FF7B3ECCB40F865610 /* PkpassKit */;
+			targetProxy = AD848A8BD3DF78D05F91CADD /* PBXContainerItemProxy */;
+		};
+		8D26585C7738D7CD62D4E3D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F3CE79FF7B3ECCB40F865610 /* PkpassKit */;
+			targetProxy = 815657DFACD719F5EDB80A2F /* PBXContainerItemProxy */;
+		};
+		9A8EC213DED9302A38E508F6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F3CE79FF7B3ECCB40F865610 /* PkpassKit */;
+			targetProxy = 51827CEC6EC6332ECE174168 /* PBXContainerItemProxy */;
+		};
+		E09E3081063678A73D19FE18 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AF782C2E4FF98C1CAFE7A3A7 /* PkpassPreviewExtension */;
+			targetProxy = 1B1ACB53123E79ABE602DABC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		03BAB4AE04440C6CD5779BE9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		227B73F94BBE1F232C68CCD8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/App/App.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Sources/App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariomoniri.PkpassQuickLook;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2D9F620F9268DF0C8A2D677A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariomoniri.PkpassKit;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		5DE34F093020ABE9AC0AACC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		76D5581572E163C8AFFCA8BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/App/App.entitlements;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Sources/App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariomoniri.PkpassQuickLook;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		76FD777C96A50C57B4D1ECA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariomoniri.PkpassKitTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		77D0662B6B57BF6D7C424FE1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariomoniri.PkpassKit;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		96564035C60206E27D498D53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/ThumbnailExtension/Thumbnail.entitlements;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Sources/ThumbnailExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariomoniri.PkpassQuickLook.Thumbnail;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		AD24497E893AC7D156E0CB78 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/ThumbnailExtension/Thumbnail.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Sources/ThumbnailExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariomoniri.PkpassQuickLook.Thumbnail;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		AEDD2396DC03755B23C05398 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/PreviewExtension/Preview.entitlements;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Sources/PreviewExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariomoniri.PkpassQuickLook.Preview;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C2D3E3F484183D7A3E876E95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariomoniri.PkpassKitTests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F4E032E21EC3FE5BB27B3C38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/PreviewExtension/Preview.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Sources/PreviewExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariomoniri.PkpassQuickLook.Preview;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1120D74D28E58195F5CA8968 /* Build configuration list for PBXNativeTarget "PkpassPreviewExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4E032E21EC3FE5BB27B3C38 /* Debug */,
+				AEDD2396DC03755B23C05398 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		54CF39F0384AC01CD8B9AC0E /* Build configuration list for PBXNativeTarget "PkpassThumbnailExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD24497E893AC7D156E0CB78 /* Debug */,
+				96564035C60206E27D498D53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		840CDE7B42DCD05CBDEADBF6 /* Build configuration list for PBXNativeTarget "PkpassKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				76FD777C96A50C57B4D1ECA3 /* Debug */,
+				C2D3E3F484183D7A3E876E95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		882325CB2FEA36E6E849250A /* Build configuration list for PBXNativeTarget "PkpassQuickLook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				227B73F94BBE1F232C68CCD8 /* Debug */,
+				76D5581572E163C8AFFCA8BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A9EDA18592F5F9D51D97EE6D /* Build configuration list for PBXNativeTarget "PkpassKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77D0662B6B57BF6D7C424FE1 /* Debug */,
+				2D9F620F9268DF0C8A2D677A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CC73A44A937B2AEE329F3C28 /* Build configuration list for PBXProject "PkpassQuickLook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03BAB4AE04440C6CD5779BE9 /* Debug */,
+				5DE34F093020ABE9AC0AACC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E6EF8697C5CA44DFF559B797 /* Project object */;
+}

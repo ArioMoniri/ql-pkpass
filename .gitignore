@@ -1,0 +1,31 @@
+# Xcode / build artifacts
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+
+# Note: the generated *.xcodeproj IS committed so the project builds without
+# xcodegen. Regenerate it any time with `xcodegen generate` (or `make project`).
+# Per-user Xcode state is ignored below.
+
+# macOS
+.DS_Store
+
+# Swift Package Manager
+.swiftpm/
+.build/
+
+# Local tooling
+.claude-flow/
+.claude/
+
+# Distribution output
+dist/
+*.zip
+!docs/**/*.zip
+
+# Sample artifacts produced by scripts (keep the curated one tracked)
+examples/*.pkpass
+!examples/Skyline-BoardingPass.pkpass

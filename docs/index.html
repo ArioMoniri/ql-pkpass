@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pkpass Quick Look — live demo</title>
+<meta name="description" content="A native macOS Quick Look plugin that previews Apple Wallet (.pkpass) passes with a tap of the Space bar.">
+<style>
+  :root { color-scheme: light dark; --accent: #146ec8; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #0c1320; color: #e9eef6; line-height: 1.6;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 80px; }
+  header img { width: 100%; border-radius: 22px; display: block; }
+  h1 { font-size: 30px; margin: 36px 0 6px; }
+  h2 { font-size: 21px; margin: 48px 0 6px; }
+  p.lead { font-size: 18px; color: #aebfd6; margin-top: 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; margin-top: 22px; }
+  .panel {
+    background: #131c2e; border: 1px solid #223049; border-radius: 18px; padding: 20px;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .panel h3 { margin: 0; font-size: 15px; color: #cdd9ec; letter-spacing: 0.3px; }
+  .panel small { color: #7d8db0; }
+  lottie-player, canvas, .svgcard { width: 100%; max-width: 320px; }
+  .svgcard img { width: 100%; display: block; }
+  code, kbd {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; background: #1c2740;
+    padding: 2px 7px; border-radius: 6px; font-size: 0.92em;
+  }
+  pre { background: #0a1120; border: 1px solid #223049; border-radius: 14px; padding: 16px; overflow:auto; }
+  a { color: #4ea3ff; }
+  .cta { display: inline-block; margin-top: 18px; background: var(--accent); color: #fff; padding: 12px 22px;
+         border-radius: 12px; text-decoration: none; font-weight: 600; }
+  footer { margin-top: 60px; color: #6f7fa3; font-size: 14px; text-align: center; }
+</style>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.4/dist/lottie-player.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="assets/hero.svg" alt="pkpass Quick Look">
+  </header>
+
+  <h1>🎫 pkpass Quick Look</h1>
+  <p class="lead">Select an Apple Wallet pass in Finder, tap <kbd>Space</kbd>, and see a Wallet-style card —
+  no double-clicking, no importing, nothing leaves your Mac.</p>
+  <a class="cta" href="https://github.com/ArioMoniri/ql-pkpass">View on GitHub →</a>
+
+  <h2>Live, moving parts</h2>
+  <p>This page renders three animation technologies side by side — the same kind of motion the README shows off.</p>
+  <div class="grid">
+    <div class="panel">
+      <h3>Lottie</h3>
+      <lottie-player src="assets/boarding.lottie.json" background="transparent" speed="1" loop autoplay></lottie-player>
+      <small>lottie-web · boarding.lottie.json</small>
+    </div>
+    <div class="panel">
+      <h3>Rive</h3>
+      <canvas id="rive" width="320" height="200"></canvas>
+      <small>@rive-app/canvas · live state machine</small>
+    </div>
+    <div class="panel">
+      <h3>Animated SVG</h3>
+      <div class="svgcard"><img src="assets/pass-card.svg" alt="Animated boarding pass card"></div>
+      <small>pure SMIL · renders on GitHub too</small>
+    </div>
+  </div>
+
+  <h2>Install in 30 seconds</h2>
+  <pre><code>git clone https://github.com/ArioMoniri/ql-pkpass.git
+cd ql-pkpass
+make install        # builds, installs to /Applications, refreshes Quick Look</code></pre>
+  <p>Then select <code>examples/Skyline-BoardingPass.pkpass</code> in Finder and press <kbd>Space</kbd>.</p>
+
+  <footer>
+    Built for macOS 12+ · MIT licensed · 100% on-device
+  </footer>
+</div>
+
+<script src="https://unpkg.com/@rive-app/canvas@2.21.6"></script>
+<script>
+  // Live Rive animation. Uses a public sample .riv from Rive's CDN.
+  window.addEventListener("load", function () {
+    try {
+      if (window.rive && window.rive.Rive) {
+        const r = new window.rive.Rive({
+          src: "https://cdn.rive.app/animations/vehicles.riv",
+          canvas: document.getElementById("rive"),
+          autoplay: true,
+          onLoad: function () { r.resizeDrawingSurfaceToCanvas(); }
+        });
+      }
+    } catch (e) {
+      console.warn("Rive failed to load:", e);
+    }
+  });
+</script>
+</body>
+</html>
