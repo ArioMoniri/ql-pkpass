@@ -91,14 +91,33 @@ final class PreviewViewController: NSViewController, @preconcurrency QLPreviewin
     // MARK: - Export
 
     @objc private func exportPDF() {
-        webView.createPDF(configuration: WKPDFConfiguration()) { [weak self] result in
+        // Export the pass card itself only — not the detail panels below it.
+        cardRect { [weak self] rect in
             guard let self else { return }
-            switch result {
-            case .success(let data):
-                self.savePDF(data)
-            case .failure(let error):
-                previewLog.error("createPDF failed: \(error.localizedDescription, privacy: .public)")
+            let config = WKPDFConfiguration()
+            if let rect { config.rect = rect }
+            self.webView.createPDF(configuration: config) { result in
+                switch result {
+                case .success(let data): self.savePDF(data)
+                case .failure(let error):
+                    previewLog.error("createPDF failed: \(error.localizedDescription, privacy: .public)")
+                }
             }
+        }
+    }
+
+    /// Asks the web view for the `.pass` card's bounds (with a small margin) so
+    /// the exported PDF contains the card only.
+    private func cardRect(_ completion: @escaping (CGRect?) -> Void) {
+        let js = "(function(){var e=document.querySelector('.pass');if(!e)return '';"
+            + "var r=e.getBoundingClientRect();"
+            + "return [r.left+window.scrollX,r.top+window.scrollY,r.width,r.height].join(',');})()"
+        webView.evaluateJavaScript(js) { value, _ in
+            guard let s = value as? String, !s.isEmpty else { completion(nil); return }
+            let p = s.split(separator: ",").compactMap { Double($0) }
+            guard p.count == 4, p[2] > 0, p[3] > 0 else { completion(nil); return }
+            let m = 14.0
+            completion(CGRect(x: max(0, p[0] - m), y: max(0, p[1] - m), width: p[2] + 2 * m, height: p[3] + 2 * m))
         }
     }
 

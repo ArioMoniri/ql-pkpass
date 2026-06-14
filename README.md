@@ -1,8 +1,6 @@
 <div align="center">
 
-![pkpass Quick Look](docs/assets/hero.svg)
-
-# pkpass Quick Look
+# 🎫 pkpass Quick Look
 
 **Peek inside Apple Wallet, Google Wallet & Samsung Wallet passes from Finder — just hit the Space bar.**
 
@@ -11,22 +9,24 @@
 ![Quick Look](https://img.shields.io/badge/Quick%20Look-preview%20%2B%20thumbnail-1a82dc)
 ![Wallets](https://img.shields.io/badge/wallets-Apple%20·%20Google%20·%20Samsung-34a853)
 ![Auto-update](https://img.shields.io/badge/updates-Sparkle-orange)
-![No dependencies](https://img.shields.io/badge/runtime%20deps-zero-2ea44f)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
+
+<p>
+<img src="docs/assets/gallery/boarding.png" width="150" alt="Boarding pass">
+<img src="docs/assets/gallery/eventticket.png" width="150" alt="Event ticket">
+<img src="docs/assets/gallery/coupon.png" width="150" alt="Coupon">
+<img src="docs/assets/gallery/storecard.png" width="150" alt="Store card">
+<img src="docs/assets/gallery/google.png" width="150" alt="Google Wallet loyalty">
+<img src="docs/assets/gallery/samsung.png" width="150" alt="Samsung Wallet coupon">
+</p>
+
+<sub>Real previews rendered by the plugin — boarding pass · event ticket · coupon · store card · Google loyalty · Samsung coupon</sub>
 
 </div>
 
 A `.pkpass` file is just a zipped-up Apple Wallet pass — a boarding pass, a coffee loyalty card, a concert ticket. macOS has no idea how to show you one without opening Wallet or unzipping it by hand. This fixes that — and throws in Google and Samsung wallet passes for good measure.
 
 Select a pass in Finder, press <kbd>Space</kbd>, and you get a proper Wallet-style card: the right colours, the logo, every field group, a scan-quality barcode, the small print on the back, a listing of everything inside the file, and the raw JSON if you want to poke around. Finder shows a card thumbnail for it too. Everything is rendered on your Mac — **no network calls, ever.**
-
-> ▶️ **See it in action:** the **[live demo](https://ariomoniri.github.io/ql-pkpass/)** lets you click through real passes of every type (boarding, ticket, coupon, loyalty, store card — Apple/Google/Samsung) and watch the plugin render each one. The animated card below plays right here on GitHub.
-
-<div align="center">
-
-<img src="docs/assets/pass-card.svg" alt="Animated boarding pass preview" width="320">
-
-</div>
 
 ---
 
@@ -40,12 +40,10 @@ Select a pass in Finder, press <kbd>Space</kbd>, and you get a proper Wallet-sty
 - 👁️ **Glance in Finder** — the preview pane shows the card *before* you press Space
 - 🖼️ **Card thumbnails** in Finder instead of a generic icon
 - 🗂️ **File listing** of everything inside the archive + 🧾 the **raw JSON**
-- 📄 **Export to PDF** from the in-app viewer
+- 📄 **Export the pass card to PDF** — a button **right in the Quick Look preview**, no need to open anything
 - 🪟 **Menu-bar app, no Dock clutter** — keeps running in the background, refresh Quick Look / Finder
 - 🔄 **Auto-updates** via Sparkle (Check for Updates)
 - 🔒 **On-device** — makes no network connections; zero runtime dependencies
-
-▶️ **[Try the interactive demo](https://ariomoniri.github.io/ql-pkpass/)** — click through real passes of every type.
 
 ---
 
@@ -168,7 +166,8 @@ Hard-won on macOS 26 — saving you the afternoons:
 
 1. **The UTI isn't what you'd guess.** `com.apple.pkpass` is the *package* type; an actual file on disk is **`com.apple.pkpass-data`** (conforms to `public.data`). Register the wrong one and the extension installs fine and then never fires.
 2. **Data-based previews need a flag.** A `QLPreviewProvider` that returns data must set **`QLIsDataBasedPreview = true`** in its Info.plist, or Quick Look treats it as view-based, waits for a view that never comes, and spins forever.
-3. **No GPU in the sandbox.** Forcing a GPU `CIContext` (or WebGPU) inside the preview extension stalls on Metal init. Barcodes are rendered on the **CPU**; WebGPU is confined to the demo page.
+3. **No GPU in the sandbox.** Forcing a GPU `CIContext` inside the preview extension stalls on Metal init. Barcodes are rendered on the **CPU** (`useSoftwareRenderer`).
+4. **A button in the preview needs a *view-based* extension.** A data-based `QLPreviewProvider` can't host controls. To put the **Export as PDF** button inside the Space-bar window, the preview is a view-based `QLPreviewingController` whose `WKWebView` only renders once the extension has `network.client` and loads from a `file://` URL.
 
 </details>
 
@@ -270,11 +269,11 @@ xcodebuild test -scheme PkpassKit -destination 'platform=macOS' CODE_SIGNING_ALL
 Sources/
   PkpassKit/            # the engine: zip reader, model, Apple/Google/Samsung parsers, renderers
   App/                  # host app — viewer, PDF export, refresh helpers, Sparkle updates
-  PreviewExtension/     # QLPreviewProvider  → the Space-bar HTML preview
+  PreviewExtension/     # QLPreviewingController → the Space-bar preview + Export button
   ThumbnailExtension/   # QLThumbnailProvider → Finder thumbnails
 Tests/PkpassKitTests/   # Swift Testing unit tests
 scripts/                # install / uninstall / build / sample + icon generators
-docs/                   # GitHub Pages demo (Lottie + Rive + WebGPU + animated SVG) + appcast.xml
+docs/                   # GitHub Pages landing page + appcast.xml
 examples/               # a ready-to-try sample pass
 project.yml             # XcodeGen project definition
 ```

@@ -61,17 +61,29 @@ final class PassViewerModel: ObservableObject {
         }
     }
 
-    /// Exports the currently-rendered pass as a PDF.
+    /// Exports the pass card itself only (not the detail panels) as a PDF.
     func exportPDF() {
         guard hasPass else { return }
-        let config = WKPDFConfiguration()
-        webView.createPDF(configuration: config) { [weak self] result in
+        let js = "(function(){var e=document.querySelector('.pass');if(!e)return '';"
+            + "var r=e.getBoundingClientRect();"
+            + "return [r.left+window.scrollX,r.top+window.scrollY,r.width,r.height].join(',');})()"
+        webView.evaluateJavaScript(js) { [weak self] value, _ in
             guard let self else { return }
-            switch result {
-            case .success(let data):
-                self.savePDF(data)
-            case .failure(let error):
-                self.errorMessage = "PDF export failed: \(error.localizedDescription)"
+            let config = WKPDFConfiguration()
+            if let s = value as? String, !s.isEmpty {
+                let p = s.split(separator: ",").compactMap { Double($0) }
+                if p.count == 4, p[2] > 0, p[3] > 0 {
+                    let m = 14.0
+                    config.rect = CGRect(x: max(0, p[0] - m), y: max(0, p[1] - m), width: p[2] + 2 * m, height: p[3] + 2 * m)
+                }
+            }
+            self.webView.createPDF(configuration: config) { result in
+                switch result {
+                case .success(let data):
+                    self.savePDF(data)
+                case .failure(let error):
+                    self.errorMessage = "PDF export failed: \(error.localizedDescription)"
+                }
             }
         }
     }
