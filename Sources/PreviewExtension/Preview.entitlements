@@ -4,7 +4,13 @@
 <dict>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
-	<key>com.apple.security.files.user-selected.read-only</key>
+	<!-- read-write so the in-preview "Export as PDF" save panel (Powerbox) can write. -->
+	<key>com.apple.security.files.user-selected.read-write</key>
+	<true/>
+	<!-- WebKit's WebContent process needs this to render even LOCAL content in a
+	     sandboxed extension. The preview loads only self-contained local HTML and
+	     makes no network requests. -->
+	<key>com.apple.security.network.client</key>
 	<true/>
 </dict>
 </plist>

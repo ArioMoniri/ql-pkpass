@@ -21,6 +21,7 @@
 		64AF93C0133F8EE885718685 /* PkpassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B621855950D64C1F1E8E836 /* PkpassKit.framework */; };
 		6A16C47A6BAD1772FC70E51B /* PassDocumentLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C273351A4483A8EBDAAB540 /* PassDocumentLoader.swift */; };
 		76D188895BB65608B0EB4202 /* PkpassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B621855950D64C1F1E8E836 /* PkpassKit.framework */; };
+		7F459B52F24ABDA8A6178284 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3771EE074AA18F100B7B635 /* PreviewViewController.swift */; };
 		82A189BFB2250FA896845ACA /* SamsungWalletParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666AF68FF4C3C946FEB11159 /* SamsungWalletParser.swift */; };
 		88A3D1CD1FAEAC581D76F033 /* PassHTMLRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789614E8EE1FD69C88723289 /* PassHTMLRenderer.swift */; };
 		94C5DF10866F02A08880A6AC /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 5E748D52A73592AD523A4E61 /* Sparkle */; };
@@ -29,7 +30,6 @@
 		B15330D353A00A1D44A02DE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 368DF42147F1DD7FB24CA8EB /* Assets.xcassets */; };
 		BB11F7A56C8E1078F10A9148 /* MiniZip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F10AAE5072A2DC857F57CD /* MiniZip.swift */; };
 		BD8D75391B2A993E5DDCC1D9 /* PkpassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B621855950D64C1F1E8E836 /* PkpassKit.framework */; };
-		C000C5722B81E35B15D10C13 /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D929AB7B6478BFD3C05686 /* PreviewProvider.swift */; };
 		C03376D082126565657ADD69 /* GoogleWalletParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFD56580B3929D2395AA80D /* GoogleWalletParser.swift */; };
 		D2913C362163FB80F91E2A12 /* PkpassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B621855950D64C1F1E8E836 /* PkpassKit.framework */; };
 		D98AF470C7458583E19589BE /* PkpassDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D078528418A8EC2684F5D0F /* PkpassDocument.swift */; };
@@ -131,7 +131,7 @@
 		C710FA327A23B95123BC3708 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D9142D8531BE2546B55CE29A /* PassColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassColor.swift; sourceTree = "<group>"; };
 		EE357CE7400BB27AC9F43C8D /* PkpassPreviewExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PkpassPreviewExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8D929AB7B6478BFD3C05686 /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
+		F3771EE074AA18F100B7B635 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,7 +252,7 @@
 			children = (
 				0F3325514ED534F8DACF3029 /* Info.plist */,
 				74A2B28F792FD36C74B3017F /* Preview.entitlements */,
-				F8D929AB7B6478BFD3C05686 /* PreviewProvider.swift */,
+				F3771EE074AA18F100B7B635 /* PreviewViewController.swift */,
 			);
 			path = PreviewExtension;
 			sourceTree = "<group>";
@@ -496,7 +496,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C000C5722B81E35B15D10C13 /* PreviewProvider.swift in Sources */,
+				7F459B52F24ABDA8A6178284 /* PreviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -43,7 +43,7 @@ Select a pass in Finder, press <kbd>Space</kbd>, and you get a proper Wallet-sty
 - 📄 **Export to PDF** from the in-app viewer
 - 🪟 **Menu-bar app, no Dock clutter** — keeps running in the background, refresh Quick Look / Finder
 - 🔄 **Auto-updates** via Sparkle (Check for Updates)
-- 🔒 **100% on-device** — zero network access, zero runtime dependencies
+- 🔒 **On-device** — makes no network connections; zero runtime dependencies
 
 ▶️ **[Try the interactive demo](https://ariomoniri.github.io/ql-pkpass/)** — click through real passes of every type.
 
@@ -183,23 +183,20 @@ A pass is a ZIP archive, but pulling in a third-party zip library for a sandboxe
 
 ---
 
-## 📄 Export a pass as PDF
+## 📄 Export a pass as PDF — right in Quick Look
 
-Two ways:
-
-- Open **pkpass Quick Look.app**, click **Open a pass & export PDF…**, pick any `.pkpass` / Google / Samsung file — the window flips into a viewer with a big **Export as PDF…** button.
-- Or right-click a pass in Finder → **Open With → pkpass Quick Look** → **Export as PDF…**.
-
-The viewer renders the exact same card the Quick Look preview shows and saves it through `WKWebView`'s PDF writer.
+Press <kbd>Space</kbd> on a pass and the preview itself carries an **Export as PDF…** button (top-right). Click it → choose where to save → done. No need to open the pass or any app.
 
 <details>
-<summary>Why isn't the Export button inside the Space-bar preview itself?</summary>
+<summary>How that's possible (it took a view-based extension)</summary>
 
 <br>
 
-It can't be — and I tested it. A third-party Quick Look **preview** runs in a locked-down WebView that **doesn't execute JavaScript, allow downloads, or let an extension add toolbar buttons**, and the system controls the window chrome (the "Open Pass" button there belongs to macOS's built-in *Pass Viewer*, not this app). So there's no supported way to put a working **Export** button in the preview pane. Export therefore lives one click away in the app, which renders the identical card and writes the PDF.
+A *data-based* Quick Look preview (HTML returned to the system) can't host controls. So the preview is a **view-based** extension (`QLPreviewingController`) — a real `NSViewController` whose view is a `WKWebView` (the card) plus a native **Export as PDF** button. The button runs `WKWebView.createPDF` and saves through a Powerbox save panel, all inside the sandboxed Quick Look window. (Two gotchas, both handled: WebKit needs the `network.client` entitlement to render even *local* content in a sandboxed extension, and the HTML must load from a file URL, not `loadHTMLString`.)
 
 </details>
+
+You can also export from **pkpass Quick Look.app** (**Open a pass & export PDF…**) or via right-click → **Open With → pkpass Quick Look**.
 
 ---
 
@@ -319,7 +316,7 @@ Gatekeeper reacting to the ad-hoc signature on a locally-built app. Right-click 
 
 <br>
 
-Yes. The extensions are sandboxed, they only read the file you're previewing, and there is **no networking code anywhere** — images and barcodes are rendered locally and embedded directly in the preview. Nothing about your passes leaves the machine.
+Yes. The extensions are sandboxed and only read the file you're previewing. There is **no networking code** — images and barcodes are rendered locally and embedded directly in the preview, so **nothing about your passes is ever fetched or sent.** (The preview extension does declare the `network.client` entitlement — WebKit refuses to render even *local* HTML in a sandboxed extension without it — but the preview loads only self-contained local content and opens no connections.)
 
 </details>
 
